@@ -1,23 +1,25 @@
 {
-    "name": "SphinxNeeds Dev",
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "containerEnv": {
-        "SHELL": "/bin/bash"
-    },
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "ms-python.python",
-                "github.vscode-github-actions",
-                "lextudio.iis",
-                "lextudio.restructuredtext",
-                "lextudio.restructuredtext-pack",
-                "swyddfa.esbonio@prerelease",
-                "trond-snekvik.simple-rst",
-                "useblocks.ubcode"
-            ]
-        }
+  "name": "Sphinx Docs",
+  "image": "mcr.microsoft.com/devcontainers/python:3.10",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "lextudio.restructuredtext" 
+      ]
     }
+  },
+
+  // コンテナ作成後に実行するコマンド
+  "postCreateCommand": "pip install -r docs/requirements.txt",
+
+  // もしPlantUMLなどでJavaやGraphvizが必要なら、ここで追加インストール可能
+  // (必要なければ features セクションは削除してOK)
+  "features": {
+    "ghcr.io/devcontainers/features/java:1": {},
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "configureZshAsDefaultShell": true
+    }
+  }
 }

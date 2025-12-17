@@ -14,17 +14,26 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Build documentation using sphinxneeds Docker image
+    # Pythonのセットアップ
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10' 
+
+    # 依存関係のインストール（テーマ含む）
+    - name: Install dependencies
       run: |
-        docker run --rm \
-          -v ${{ github.workspace }}:/repo \
-          -w /repo/docs/source \
-          --user $(id -u):$(id -g) \
-          danwos/sphinxneeds:latest \
-          /bin/bash -lc "python -m pip install -r /repo/docs/requirements.txt && sphinx-build -b html . _build"
+        python -m pip install --upgrade pip
+        pip install -r docs/requirements.txt
+
+    # ビルド実行
+    - name: Build Sphinx documentation
+      run: |
+        # GraphvizやPlantUMLが必要ならここで sudo apt-get install graphviz などする
+        sphinx-build -b html docs/source docs/build
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/_build
+        publish_dir: ./docs/build
