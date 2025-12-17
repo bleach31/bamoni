@@ -1,0 +1,3 @@
+# ドキュメンテーション用
+# danwos/sphinxneeds:latestを前提
+sphinx-rtd-theme==3.0.2
