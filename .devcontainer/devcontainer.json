@@ -1,0 +1,23 @@
+{
+    "name": "SphinxNeeds Dev",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "containerEnv": {
+        "SHELL": "/bin/bash"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "github.vscode-github-actions",
+                "lextudio.iis",
+                "lextudio.restructuredtext",
+                "lextudio.restructuredtext-pack",
+                "swyddfa.esbonio@prerelease",
+                "trond-snekvik.simple-rst",
+                "useblocks.ubcode"
+            ]
+        }
+    }
+}
