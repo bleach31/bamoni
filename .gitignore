@@ -1,0 +1,4 @@
+# Ignore build directories
+build/
+# Explicitly ignore docs build output
+docs/build/
