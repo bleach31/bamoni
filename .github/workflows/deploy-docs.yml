@@ -21,7 +21,7 @@ jobs:
           -w /repo/docs/source \
           --user $(id -u):$(id -g) \
           danwos/sphinxneeds:latest \
-          /bin/bash -lc "python -m pip install --user -r /repo/docs/requirements.txt && sphinx-build -b html . _build"
+          /bin/bash -lc "python -m pip install -r /repo/docs/requirements.txt && sphinx-build -b html . _build"
 
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
