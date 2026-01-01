@@ -6,9 +6,11 @@
 bamoni documentation
 ====================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+
+要件定義ページ
+------------
+
+要件一覧は次のドキュメントを参照してください: :doc:`要件定義 <requirements>`。
 
 
 .. toctree::
