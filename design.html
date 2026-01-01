@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>bamoni ハードウェア設計仕様書 (Circuit Design) &mdash; bamoni  ドキュメント</title>
+  <title>仕様検討メモ &mdash; bamoni  ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
@@ -35,7 +35,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="requirements.html" /> 
+    <link rel="prev" title="要件定義" href="requirements.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -59,20 +59,26 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">bamoni ハードウェア設計仕様書 (Circuit Design)</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">電源回路構成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">設計方針</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html">要件定義</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">仕様検討メモ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">電源回路構成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">設計方針</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#power">回路図 (Power)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">電圧測定回路構成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id5">設計方針</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">電圧測定回路構成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">設計方針</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#voltage-sensing">回路図 (Voltage Sensing)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">計算式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">計算式</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">実装上の注意</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">実装上の注意</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">アドバタイズのデータ容量設計</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id26">アドバタイズ間隔について</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id43">スマホアプリ仕様、すれ違い通信による受信</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id48">設置場所問題</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rtc-vs-flash">RTCメモリ vs Flash</a></li>
 </ul>
 </li>
 </ul>
@@ -91,7 +97,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">bamoni ハードウェア設計仕様書 (Circuit Design)</li>
+      <li class="breadcrumb-item active">仕様検討メモ</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/design.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -101,8 +107,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="bamoni-circuit-design">
-<h1>bamoni ハードウェア設計仕様書 (Circuit Design)<a class="headerlink" href="#bamoni-circuit-design" title="Link to this heading"></a></h1>
+  <section id="id1">
+<h1>仕様検討メモ<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <dl class="field-list simple">
 <dt class="field-odd">Author<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bamoni Project Team</p>
@@ -114,16 +120,16 @@
 <dd class="field-odd"><p>Seeed Studio XIAO ESP32C3</p>
 </dd>
 </dl>
-<section id="id1">
-<h2>概要<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<section id="id2">
+<h2>概要<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
 <p>本ドキュメントは、車両用バッテリー監視システム「bamoni」のハードウェア回路設計について記述する。
 安全性と省電力性を最優先し、乾電池（ニッケル水素電池）駆動および高インピーダンス電圧測定回路を採用する。</p>
 </section>
-<section id="id2">
-<h2>電源回路構成<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>車両からの常時給電および充電は行わず、独立したニッケル水素電池（NiMH）4本による駆動とする。</p>
 <section id="id3">
-<h3>設計方針<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<h2>電源回路構成<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<p>車両からの常時給電および充電は行わず、独立したニッケル水素電池（NiMH）4本による駆動とする。</p>
+<section id="id4">
+<h3>設計方針<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>安全性:</strong> 車内高温環境下でのリチウムイオン電池（Li-Po）の使用を回避する。</p></li>
 <li><p>[cite_start]**充電ICの制約:** XIAO ESP32C3搭載の充電IC（ETA4054）はリチウムイオン専用（4.2V充電停止）であり、NiMHの充電には不適合であるため使用しない [cite: 1, 10, 16]。</p></li>
@@ -156,11 +162,11 @@ NiMH x 4 (Series)
 </ul>
 </section>
 </section>
-<section id="id4">
-<h2>電圧測定回路構成<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<p>車両の鉛バッテリー（12V系）の電圧を測定するため、分圧回路を用いてESP32C3のADC入力範囲（0-3.0V程度）に変換する。</p>
 <section id="id5">
-<h3>設計方針<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<h2>電圧測定回路構成<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<p>車両の鉛バッテリー（12V系）の電圧を測定するため、分圧回路を用いてESP32C3のADC入力範囲（0-3.0V程度）に変換する。</p>
+<section id="id6">
+<h3>設計方針<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><strong>暗電流対策:</strong> 常時接続となるため、高抵抗（合計122kΩ）を使用して消費電流を約0.1mAに抑える。</p></li>
 <li><p><strong>サージ対策:</strong> オルタネーターノイズやロードダンプからGPIOを保護するため、ツェナーダイオードとコンデンサを配置する。</p></li>
@@ -187,8 +193,8 @@ NiMH x 4 (Series)
 </pre></div>
 </div>
 </section>
-<section id="id6">
-<h3>計算式<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id7">
+<h3>計算式<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
 <ul>
 <li><p><strong>分圧比:</strong></p>
 <div class="math notranslate nohighlight">
@@ -203,12 +209,232 @@ ESP32のADC最大入力（減衰最大時）を約3.3Vとした場合:</p>
 </ul>
 </section>
 </section>
-<section id="id7">
-<h2>実装上の注意<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<section id="id8">
+<h2>実装上の注意<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
 <li><p><strong>GND共通化:</strong> 電圧測定のため、電池駆動であってもXIAOのGNDを車両のボディアース（GND）に接続する必要がある。</p></li>
 <li><p><strong>キャリブレーション:</strong> 抵抗器の誤差（通常5%）を補正するため、実測値を用いたソフトウェア補正係数の調整を推奨する。</p></li>
 </ol>
+</section>
+<section id="id9">
+<h2>アドバタイズのデータ容量設計<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
+<p>BLEのアドバタイズで送れるデータ容量は、<a href="#id10"><span class="problematic" id="id11">**</span></a>「従来のモード」**か**「Coded PHY (Extended Advertising) モード」**かで劇的に変わります。</p>
+<p>今回のbamoni（Coded PHY）で使う**Extended Advertising**なら、<strong>最大 1650バイト</strong> まで送れます（理論値）。</p>
+<p>ただし、扱いやすさと通信効率の面で「壁」がいくつかあるので、詳しく解説します。</p>
+<p>### 1. モードによる容量の違い</p>
+<div class="line-block">
+<div class="line">モード | 最大容量 | 補足 |</div>
+<div class="line">--- | --- | --- |</div>
+<div class="line"><a href="#id12"><span class="problematic" id="id13">**</span></a>Legacy Advertising**&lt;br&gt;</div>
+</div>
+<p>&lt;br&gt;(従来のBLE 4.x) | <strong>31 バイト</strong> | 非常に少ないです。Flagsや名前を入れると、データ用には実質20バイト程度しか残りません。 |
+| <a href="#id14"><span class="problematic" id="id15">**</span></a>Extended Advertising**&lt;br&gt;</p>
+<p>&lt;br&gt;(BLE 5.x / Coded PHY) | <strong>1650 バイト</strong> | 今回はこちらを使います。ただし、パケットが分割（チェーン）されるため、いくつか注意点があります。 |</p>
+<p>### 2. Extended Advertising の「254バイトの壁」</p>
+<p>1650バイト送れるとはいえ、1つの電波の塊（パケット）に詰め込めるのは <strong>254バイト</strong> までです。これを超えると「Chaining（パケット分割）」が発生します。</p>
+<ul class="simple">
+<li><p><strong>254バイト以内:</strong></p></li>
+<li><p>1回の送信で完結します。<a href="#id16"><span class="problematic" id="id17">**</span></a>最も効率が良く、受信側の取りこぼしも少ない**です。</p></li>
+<li><p>「現在値」＋「過去ログ数回分」ならここに収めるのがベストです。</p></li>
+<li><p><strong>254バイト超 〜 1650バイト:</strong></p></li>
+<li><p>スマホ側は、複数のパケットを連続受信して結合する処理が必要になります。</p></li>
+<li><p>Coded PHY（通信速度が遅い）でこれをやると、<strong>通信時間（Air Time）が長くなり、電池消費が増えます</strong>。</p></li>
+</ul>
+<p>### 3. 実質使えるデータサイズ (Overheadの計算)</p>
+<p>「254バイト」まるまる使えるわけではありません。アドバタイズパケットには必ず「ヘッダ（管理情報）」がつきます。</p>
+<p><strong>Manufacturer Data (マニュファクチャラデータ) を使う場合の構成:</strong></p>
+<p><a href="#id18"><span class="problematic" id="id19">``</span></a><a href="#id20"><span class="problematic" id="id21">`</span></a>text
+[ 全体: 最大 254 バイト (分割なしの場合) ]
+-----------------------------------------------------------
+| Length (1B) | Type (1B) | Company ID (2B) |  ★自由データ  |
+-----------------------------------------------------------</p>
+<p><a href="#id22"><span class="problematic" id="id23">``</span></a><a href="#id24"><span class="problematic" id="id25">`</span></a></p>
+<ul class="simple">
+<li><p><strong>Length:</strong> 1バイト</p></li>
+<li><p><strong>Type:</strong> 1バイト (0xFF = Manufacturer Data)</p></li>
+<li><p><strong>Company ID:</strong> 2バイト (0xFFFFなど)</p></li>
+<li><p><strong>合計オーバーヘッド:</strong> <strong>4バイト</strong></p></li>
+</ul>
+<p>つまり、分割なしで送れる純粋なデータ量は <strong>250バイト</strong> です。</p>
+<p>### 4. bamoniへの適用アドバイス</p>
+<p>現在設計中の <cite>SensorData</cite> 構造体や、要件にある「過去ログ」を考えると、以下のように計算できます。</p>
+<ul class="simple">
+<li><p><strong>現在のデータ構造:</strong></p></li>
+<li><p><cite>timestamp</cite> (4B) + <cite>voltage</cite> (2B) + <cite>current</cite> (2B) + <cite>battery</cite> (1B) = <strong>約 9バイト</strong></p></li>
+<li><p>余裕しゃくしゃくです。</p></li>
+<li><p><strong>過去ログを積む場合:</strong></p></li>
+<li><p>例えば、ログ1件あたり 5バイト（時刻差分1B + 電圧2B + 電流2B）に圧縮したとします。</p></li>
+<li><p>空き容量 (約240バイト) ÷ 5バイト = <strong>48件分</strong></p></li>
+<li><p>10分おきのログなら、48件 × 10分 = <strong>8時間分の過去データ</strong> を1パケットに載せられます！</p></li>
+</ul>
+<p>### 結論</p>
+<p><strong>「分割なしで送れる 250バイト」</strong> を目安に設計するのが一番安全で省電力です。
+250バイトあれば、今のbamoniの要件（数回分のログによる冗長化）には十分すぎます。</p>
+<p>もしそれを超える大量のデータ（数日分のログなど）を送りたい場合は、アドバタイズに載せるのをやめて、<strong>「接続（Connect）してからダウンロードする」</strong> 方式に切り替えるのが定石です。</p>
+</section>
+<section id="id26">
+<h2>アドバタイズ間隔について<a class="headerlink" href="#id26" title="Link to this heading"></a></h2>
+<p>「10分に1回の電波を廊下で待つ」のは、まさに「待ちぼうけ」状態で苦行すぎますね。冬場や夏場だと地獄です。</p>
+<p>この問題を解決する、現実的なアプローチを <strong>「松・竹・梅」</strong> の3段階で提案します。</p>
+<p>---</p>
+<p>### 【松】自宅の窓際に「中継機（ゲートウェイ）」を置く（推奨）</p>
+<p>これが**最強かつ最もスマートな解決策**です。お手元にもう一台ESP32-C3があればすぐできます。</p>
+<ul class="simple">
+<li><p><strong>仕組み:</strong></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><strong>中継機（受信機）</strong> を、駐車場に一番近い自宅の窓際やベランダに設置します（AC電源で常時稼働）。</p></li>
+<li><p>こいつは <strong>24時間365日、Coded PHYをスキャン</strong> し続けます。</p></li>
+<li><p>10分に1回、車からのパケットを受信したら、メモリに最新情報を保存します。</p></li>
+<li><p><strong>人間（あなた）</strong> は、廊下に出る必要はありません。部屋の中からこの中継機に（Wi-Fiや普通のBLEで）アクセスすれば、<strong>「最後に受信したデータ」を瞬時に見れます</strong>。</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>メリット:</strong> 待ち時間ゼロ。寒くない。Google Sheetsへのアップロード機能などもここに追加できます。</p></li>
+<li><p><strong>デメリット:</strong> もう一台ESP32が必要。</p></li>
+</ul>
+<p>### 【竹】送信時間を長くする（バースト送信）</p>
+<p>デバイス単体でなんとかする案です。</p>
+<ul class="simple">
+<li><p><strong>仕組み:</strong></p></li>
+<li><p>「起きて1回送信して即寝る（送信時間0.1秒）」だから捕まらないのです。</p></li>
+<li><p><strong>「起きて、10秒間〜30秒間アドバタイズし続けてから、寝る」</strong> ように変更します。</p></li>
+<li><p><strong>使い方:</strong></p></li>
+<li><p>廊下に出てnRF Connectを開けば、最長でも10分待てば**確実に**拾えます（一瞬で消えたりしない）。</p></li>
+<li><p>ただ、「いつ来るかわからない」ので待つ必要はあります。</p></li>
+<li><p><strong>電池への影響:</strong> 送信時間を延ばす分、消費電力は増えますが、10分に1回の頻度なら30秒送信してもエネループなら許容範囲です。</p></li>
+</ul>
+<p>### 【梅】過去データ（ヒストリー）を全部乗っける</p>
+<p>これは「待ち時間」の解決にはなりませんが、「せっかく捕まえたのに、今の瞬間のデータしか見れない」という悲劇を防ぎます。</p>
+<ul class="simple">
+<li><p><strong>仕組み:</strong></p></li>
+<li><p>アドバタイズパケットの中に、<strong>「現在値」＋「過去1時間分（10分x6回分）のデータ」</strong> を全部詰め込みます。</p></li>
+<li><p><strong>効果:</strong></p></li>
+<li><p>廊下で頑張って1回受信さえすれば、過去の推移も全部取れるので、「さっき受信し損ねた分」も回収できます。</p></li>
+</ul>
+<p>---</p>
+<p>### おすすめの組み合わせ</p>
+<p><strong>【松（中継機）】</strong> を目指しつつ、まずは <strong>【竹（送信時間延長）】</strong> で実装するのが良いでしょう。</p>
+<p>コードの修正は簡単です。<cite>setup()</cite> の最後を変えるだけです。</p>
+<p><strong>修正前:</strong></p>
+<dl>
+<dt><a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id29"><span class="problematic" id="id30">`</span></a>cpp</dt><dd><p>// アドバタイズ開始
+pAdvertising-&gt;start();
+delay(2000); // 2秒だけ出して寝る</p>
+<p>// 寝る準備...</p>
+</dd>
+</dl>
+<p><a href="#id31"><span class="problematic" id="id32">``</span></a><a href="#id33"><span class="problematic" id="id34">`</span></a></p>
+<p><strong>修正後（30秒出し続ける）:</strong></p>
+<dl>
+<dt><a href="#id35"><span class="problematic" id="id36">``</span></a><a href="#id37"><span class="problematic" id="id38">`</span></a>cpp</dt><dd><p>// アドバタイズ開始
+pAdvertising-&gt;start();</p>
+<p>// 30秒間、ひたすら電波を出し続ける（この間、スマホで見つけやすくなる）
+delay(30000);</p>
+<p>// 寝る準備...</p>
+</dd>
+</dl>
+<p><a href="#id39"><span class="problematic" id="id40">``</span></a><a href="#id41"><span class="problematic" id="id42">`</span></a></p>
+<p>まずはこれを試してみて、それでも「待つのダルい！」となったら、2台目のESP32を窓際に配備しましょう。どうしますか？</p>
+</section>
+<section id="id43">
+<h2>スマホアプリ仕様、すれ違い通信による受信<a class="headerlink" href="#id43" title="Link to this heading"></a></h2>
+<p>ご想像の通り、スマホでの「常駐（バックグラウンド）スキャン」は、<a href="#id44"><span class="problematic" id="id45">**</span></a>技術的な難易度というより、OS（Android/iOS）の仕様との戦い**という意味でハードルが高いです。</p>
+<p>ですが、エレベーターや徒歩移動中の「すれ違い通信（Drive-by Download）」は非常に魅力的ですよね。
+実現するための現実的なルートを3つ（難易度順）紹介します。</p>
+<p>---</p>
+<p>### ルートA：自作アプリを作る（Flutter推奨）</p>
+<p><strong>難易度：中〜高</strong>
+<strong>自由度：最高</strong></p>
+<p>もしご自身でアプリを作ってみたいなら、<a href="#id46"><span class="problematic" id="id47">**</span></a>Flutter**（Google製のクロスプラットフォーム開発フレームワーク）を使うのが一番の近道です。JavaやKotlinでゼロから書くより圧倒的に楽です。</p>
+<ul class="simple">
+<li><p><strong>ライブラリ:</strong> <cite>flutter_blue_plus</cite> という神ライブラリがあり、最近のアップデートで <strong>Coded PHY</strong> にも対応しました。</p></li>
+<li><p><strong>常駐の壁:</strong> Androidは電池持ちを良くするため、バックグラウンドのアプリを容赦なくキル（停止）します。これを防ぐには、<strong>「フォアグラウンドサービス」</strong> という仕組みを使います。</p></li>
+<li><p>LINEの通話中や、音楽プレーヤーのように、通知バーに「bamoniスキャン中」というアイコンを常に出し続けることで、OSに「このアプリは仕事中だから殺さないで！」とアピールします。</p></li>
+<li><p><strong>実装イメージ:</strong></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>アプリ起動 → 通知を出して常駐開始。</p></li>
+<li><p>画面が消えてもウラでCoded PHYスキャンを回し続ける。</p></li>
+<li><p><cite>Manufacturer Data</cite> (0xFFFF...) を見つけたら、Google Sheets APIを叩いて送信。</p></li>
+</ol>
+<p>### ルートB：自動化アプリ「MacroDroid」を使う</p>
+<p><strong>難易度：低</strong>
+<strong>自由度：中</strong></p>
+<p>コードを書かずに、「もし〜なら、〜する」という設定だけでアプリを作れるツールです。「Tasker」よりも直感的で簡単です。</p>
+<p>1. <strong>トリガー:</strong> 「Bluetoothビーコンを検知した時」
+* ここで <cite>bamoni-P</cite> のMACアドレスやUUIDを指定します。</p>
+<p>2. <strong>アクション:</strong> 「Webhook送信（HTTP GET）」
+* Google Apps Script (GAS) のURLを叩いて、現在時刻などを記録させる。</p>
+<p>3. <strong>懸念点:</strong>
+* MacroDroid標準の検知機能が、マニアックな <strong>Coded PHY</strong> の電波をちゃんと拾ってくれるか（Legacyしか見ていない可能性）が賭けになります。もし拾えれば、これが一番楽な解決策です。</p>
+<p>### ルートC：専用のロガーアプリを使う</p>
+<p><strong>難易度：極低</strong>
+<strong>自由度：低</strong></p>
+<p>すでに世の中にある「BLEをスキャンしてネットに投げる」専用アプリを使います。</p>
+<ul class="simple">
+<li><p><strong>例:</strong> <strong>&quot;MQTT Analyzer&quot;</strong> や <strong>&quot;BLE to MQTT&quot;</strong> 系のアプリ</p></li>
+<li><p>これらは最初から「常駐」を前提に作られているので、途中で止まる心配が少ないです。</p></li>
+<li><p>ただし、送り先がGoogle Sheetsではなく「MQTTブローカー」などになるため、受け皿側のサーバー設定が少し必要になります。</p></li>
+</ul>
+<p>---</p>
+<p>### 私の推奨</p>
+<p>まずは <strong>ルートB（MacroDroid）</strong> を試してみるのが良いでしょう。
+無料版で試せますし、もしこれで <cite>bamoni</cite> の電波（Coded PHY）が反応するなら、アプリ開発の手間がゼロになります。</p>
+<p>もしMacroDroidがCoded PHYに反応しなかった場合は、<strong>ルートA（Flutterでの自作）</strong> に挑戦するか、前述の「自宅窓際ゲートウェイ（ESP32）」で解決するか、の二択になります。</p>
+<p>エレベーターや徒歩でのピックアップ、ロマンがあって良いですね！
+MacroDroid、試してみる価値はあると思いますよ。</p>
+</section>
+<section id="id48">
+<h2>設置場所問題<a class="headerlink" href="#id48" title="Link to this heading"></a></h2>
+<p>アンテナを窓まで伸ばすべきか？</p>
+<p>２メートルも伸ばすとなると、アンテナ用の同軸ケーブルで延長するのは**「コスト」**と**「電波の減衰（ロス）」**の両面であまり得策ではありません。</p>
+<p>最も安く、かつ通信性能を落とさずに済む「裏技（というか正攻法）」から順に紹介します。</p>
+<p>### 方法1：【推奨】アンテナは伸ばさず、電源・信号線を伸ばす（最安・最強）</p>
+<p>これが**一番安く（数百円）、電波も最強**の状態を維持できる方法です。</p>
+<ul class="simple">
+<li><p><strong>考え方:</strong></p></li>
+<li><p>アンテナケーブル（高周波）を2m伸ばすと、電波がケーブルの中で半分くらい熱になって消えてしまいます（ロス）。しかもケーブルが高いです。</p></li>
+<li><p>代わりに、<strong>XIAO本体ごとアンテナを設置したい場所（ルーフ付近など）に持って行ってしまい</strong>、そこまでの「電源線」と「電圧測定用の線」を普通の電線で2m伸ばします。</p></li>
+<li><p><strong>コスト:</strong></p></li>
+<li><p><a href="#id49"><span class="problematic" id="id50">**</span></a>約100円〜200円**（ホームセンターの切り売り電線や、Amazonの細い電線でOK）。</p></li>
+<li><p><strong>やり方:</strong></p></li>
+<li><p>電池ボックスと分圧回路は手元（安全な場所）に置く。</p></li>
+<li><p>そこからXIAOまでの配線（VCC, GND, アナログ入力の3本）を2mの電線で延長してハンダ付けする。</p></li>
+<li><p>これなら電気的なロスはほぼゼロで、アンテナはXIAO直結なので感度MAXです。</p></li>
+</ul>
+<p>---</p>
+<p>### 方法2：Wi-Fi用の延長ケーブルを使う（一般的）</p>
+<p>どうしても「本体は手元、アンテナだけ遠く」にしたい場合は、市販のWi-Fi用延長ケーブルを使います。</p>
+<ul class="simple">
+<li><p><strong>考え方:</strong></p></li>
+<li><p>XIAOの端子を一般的な「SMA」という太い端子に変換し、そこから太めのケーブルで延長します。</p></li>
+<li><p><strong>買うもの（合計 1,000円〜1,500円程度）:</strong></p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><strong>変換ケーブル:</strong> U.FL(IPEX) → RP-SMAメス（短いもの）</p></li>
+</ol>
+<p>2. <strong>延長ケーブル:</strong> RP-SMA オス-メス 延長ケーブル（2m）
+* Amazonで「WiFi アンテナ 延長ケーブル」と検索すると出てきます。</p>
+<ul class="simple">
+<li><p><strong>注意点:</strong></p></li>
+<li><p><strong>端子の種類:</strong> Wi-Fi用は通常**「RP-SMA（リバースポーラリティ）」**という規格です。「ピンがどっちに出ているか」が複雑なので、「Wi-Fi用」と書かれたセット品を買うのが無難です。</p></li>
+<li><p><strong>ロス:</strong> 2m伸ばすと、電波強度が少し落ちます（Coded PHYの距離が1割〜2割減るイメージ）。</p></li>
+</ul>
+<p>---</p>
+<p>### 結論：どっちがいい？</p>
+<p><strong>「方法1（電線を伸ばす）」</strong> を強くおすすめします。</p>
+<ul class="simple">
+<li><p><strong>安い:</strong> 同軸ケーブルは高いですが、ただの電気コードは安いです。</p></li>
+<li><p><strong>性能が良い:</strong> アンテナ直結が一番飛びます。</p></li>
+<li><p><strong>加工が楽:</strong> 特殊なコネクタのカシメ工具などが不要で、ハンダ付けやビニールテープだけで済みます。</p></li>
+</ul>
+<p>XIAO本体をタッパーなどの小さなケースに入れて、アンテナを立てたい場所に貼り付け、そこから電線を2m引っ張ってくるのがベストプラクティスです。</p>
+</section>
+<section id="rtc-vs-flash">
+<h2>RTCメモリ vs Flash<a class="headerlink" href="#rtc-vs-flash" title="Link to this heading"></a></h2>
+<p>「Flashへの書き込み」についてですが、頻繁な書き込み（3分や12分毎）は書き込み時間の遅延と消費電力、そして寿命の観点から**「RTCメモリ」**の使用を強く推奨します。</p>
+<p>RTCメモリ: Deep Sleep中もデータが消えず、読み書きが一瞬で、電力消費もゼロに等しいです。電池交換をしない限りデータは残ります。</p>
+<p>Flash: 電源が完全に断たれても残りますが、書き込みに電力を食います。</p>
 </section>
 </section>
 
@@ -216,7 +442,7 @@ ESP32のADC最大入力（減衰最大時）を約3.3Vとした場合:</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="requirements.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="requirements.html" class="btn btn-neutral float-left" title="要件定義" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
