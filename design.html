@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ja" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bamoni ハードウェア設計仕様書 (Circuit Design) &mdash; bamoni  ドキュメント</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=c033477b"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=4755f45a"></script>
+      <script src="_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+      <script src="_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+      <script src="_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+      <script src="_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+      <script src="_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="requirements.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            bamoni
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">bamoni ハードウェア設計仕様書 (Circuit Design)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">電源回路構成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id3">設計方針</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#power">回路図 (Power)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">電圧測定回路構成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id5">設計方針</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#voltage-sensing">回路図 (Voltage Sensing)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">計算式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">実装上の注意</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bamoni</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">bamoni ハードウェア設計仕様書 (Circuit Design)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/design.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bamoni-circuit-design">
+<h1>bamoni ハードウェア設計仕様書 (Circuit Design)<a class="headerlink" href="#bamoni-circuit-design" title="Link to this heading"></a></h1>
+<dl class="field-list simple">
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bamoni Project Team</p>
+</dd>
+<dt class="field-even">Status<span class="colon">:</span></dt>
+<dd class="field-even"><p>Draft</p>
+</dd>
+<dt class="field-odd">Device<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Seeed Studio XIAO ESP32C3</p>
+</dd>
+</dl>
+<section id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Link to this heading"></a></h2>
+<p>本ドキュメントは、車両用バッテリー監視システム「bamoni」のハードウェア回路設計について記述する。
+安全性と省電力性を最優先し、乾電池（ニッケル水素電池）駆動および高インピーダンス電圧測定回路を採用する。</p>
+</section>
+<section id="id2">
+<h2>電源回路構成<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<p>車両からの常時給電および充電は行わず、独立したニッケル水素電池（NiMH）4本による駆動とする。</p>
+<section id="id3">
+<h3>設計方針<a class="headerlink" href="#id3" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>安全性:</strong> 車内高温環境下でのリチウムイオン電池（Li-Po）の使用を回避する。</p></li>
+<li><p>[cite_start]**充電ICの制約:** XIAO ESP32C3搭載の充電IC（ETA4054）はリチウムイオン専用（4.2V充電停止）であり、NiMHの充電には不適合であるため使用しない [cite: 1, 10, 16]。</p></li>
+<li><p><strong>保護:</strong> USB接続時の電源逆流防止および、NiMH 4本直列時の過電圧（約5.8V）をXIAOの許容範囲（5Vピン）へ適合させるため、整流用ダイオードを使用する。</p></li>
+</ul>
+</section>
+<section id="power">
+<h3>回路図 (Power)<a class="headerlink" href="#power" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[ Battery Box ]             [ Protection ]           [ MCU ]
+
+NiMH x 4 (Series)
+(approx. 4.8V - 5.8V)
+      (+) --------------------|&gt;|--------------------( 5V Pin )
+                            Diode (1N4007)
+                            Vf = ~0.7V drop
+
+      (-) -------------------------------------------( GND Pin )
+</pre></div>
+</div>
+<p><strong>部品選定:</strong></p>
+<ul class="simple">
+<li><dl class="simple">
+<dt><strong>Diode:</strong> 1N4007 (整流用ダイオード)</dt><dd><ul>
+<li><p>目的1: 電圧降下（約0.7V）により、満充電時の5.8VをXIAOの安全圏（約5.1V）へ下げる。</p></li>
+<li><p>目的2: 開発時にUSBを接続した際、電池側への電流逆流（爆発・液漏れ）を防止する。</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</section>
+</section>
+<section id="id4">
+<h2>電圧測定回路構成<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<p>車両の鉛バッテリー（12V系）の電圧を測定するため、分圧回路を用いてESP32C3のADC入力範囲（0-3.0V程度）に変換する。</p>
+<section id="id5">
+<h3>設計方針<a class="headerlink" href="#id5" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>暗電流対策:</strong> 常時接続となるため、高抵抗（合計122kΩ）を使用して消費電流を約0.1mAに抑える。</p></li>
+<li><p><strong>サージ対策:</strong> オルタネーターノイズやロードダンプからGPIOを保護するため、ツェナーダイオードとコンデンサを配置する。</p></li>
+</ul>
+</section>
+<section id="voltage-sensing">
+<h3>回路図 (Voltage Sensing)<a class="headerlink" href="#voltage-sensing" title="Link to this heading"></a></h3>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(Car Battery +)
+       |
+       |
+      [R1]  100kΩ
+       |
+       +-----&gt; Measure Point (To XIAO A0/D0 Pin)
+       |
+       +-----&gt; [D1] Zener Diode (3.6V) -&gt; GND (Overvoltage Protection)
+       |
+      [R2]  22kΩ
+       |
+       +-----&gt; [C1] Capacitor (0.1uF - 1uF) -&gt; GND (Noise Filter)
+       |
+(Car Body GND)
+       |
+(XIAO GND)  &lt;-- Common GND Required
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3>計算式<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<ul>
+<li><p><strong>分圧比:</strong></p>
+<div class="math notranslate nohighlight">
+\[V_{out} = V_{in} \times \frac{R2}{R1 + R2} = V_{in} \times \frac{22}{122} \approx \frac{V_{in}}{5.545}\]</div>
+</li>
+<li><p><strong>最大測定可能電圧:</strong>
+ESP32のADC最大入力（減衰最大時）を約3.3Vとした場合:</p>
+<div class="math notranslate nohighlight">
+\[V_{max} = 3.3V \times \frac{122}{22} \approx 18.3V\]</div>
+<p>通常の車両電圧（12.0V - 14.4V）に対し十分なマージンを持つ。</p>
+</li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h2>実装上の注意<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>GND共通化:</strong> 電圧測定のため、電池駆動であってもXIAOのGNDを車両のボディアース（GND）に接続する必要がある。</p></li>
+<li><p><strong>キャリブレーション:</strong> 抵抗器の誤差（通常5%）を補正するため、実測値を用いたソフトウェア補正係数の調整を推奨する。</p></li>
+</ol>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="requirements.html" class="btn btn-neutral float-left" title="&lt;no title&gt;" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, motohiro.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

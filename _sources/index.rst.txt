@@ -12,10 +12,12 @@ bamoni documentation
 
 要件一覧は次のドキュメントを参照してください: :doc:`要件定義 <requirements>`。
 
+:doc:`設計案 <design>`
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    requirements
+   design
 
