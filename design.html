@@ -79,6 +79,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id43">スマホアプリ仕様、すれ違い通信による受信</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id48">設置場所問題</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rtc-vs-flash">RTCメモリ vs Flash</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#esp-now">ESP NOW</a></li>
 </ul>
 </li>
 </ul>
@@ -435,6 +436,39 @@ MacroDroid、試してみる価値はあると思いますよ。</p>
 <p>「Flashへの書き込み」についてですが、頻繁な書き込み（3分や12分毎）は書き込み時間の遅延と消費電力、そして寿命の観点から**「RTCメモリ」**の使用を強く推奨します。</p>
 <p>RTCメモリ: Deep Sleep中もデータが消えず、読み書きが一瞬で、電力消費もゼロに等しいです。電池交換をしない限りデータは残ります。</p>
 <p>Flash: 電源が完全に断たれても残りますが、書き込みに電力を食います。</p>
+</section>
+<section id="esp-now">
+<h2>ESP NOW<a class="headerlink" href="#esp-now" title="Link to this heading"></a></h2>
+<p>実験の結果、ESP NOWはCODED phyに比べて通信距離がわずかに劣ることがわかった。
+「あと少しで届くのに！」という一番悔しい、でも貴重な結果が出ましたね。
+外廊下まで来ているなら、壁一枚、ドア一枚の差ですね。</p>
+<p>ご質問の**「なぜESP-NOWにしたんだっけ？」**という点と、<a href="#id51"><span class="problematic" id="id52">**</span></a>「C3を買い足したら届くのか？」**について整理します。</p>
+<p>### 1. なぜ「ESP-NOW」を選んだのか？</p>
+<p>理由は一つだけ、<strong>「手持ちの受信機が ESP8266 だったから」</strong> です。</p>
+<ul class="simple">
+<li><p><strong>ESP32-C3 (送信側):</strong> 「ESP-NOW」も「Bluetooth Long Range (Coded PHY)」も両方しゃべれます。</p></li>
+<li><p><strong>ESP8266 (受信側):</strong> <a href="#id53"><span class="problematic" id="id54">**</span></a>「ESP-NOW」しかしゃべれません。<a href="#id55"><span class="problematic" id="id56">**</span></a>（Bluetooth機能がないため）</p></li>
+</ul>
+<p>つまり、C3君が、性能の低い8266おじいちゃんに合わせて、<strong>わざわざ飛距離の落ちる「ESP-NOW」という共通言語で話してあげていた</strong>、というのが今の状況です。</p>
+<p>### 2. C3をもう一つ買ったら届くか？</p>
+<p><strong>結論：間違いなく届くようになります。</strong></p>
+<p>ただし、それは「アンテナが良くなるから」ではありません。<a href="#id57"><span class="problematic" id="id58">**</span></a>「通信方式を Coded PHY (Bluetooth Long Range) に切り替えられるから」**です。</p>
+<p>もし C3 を買い足しても、<strong>ESP-NOW のままだと、結果は今とほとんど変わらない（あるいは誤差レベルの改善）</strong> でしょう。Wi-Fiの電波特性としての限界（壁の貫通力不足）に達しているからです。</p>
+<p>### 3. なぜ Coded PHY なら届くのか？</p>
+<p>C3 同士になれば、封印していた <strong>Bluetooth Long Range (Coded PHY)</strong> が使えます。これが ESP-NOW とはどう違うのか、イメージで言うとこうです。</p>
+<ul class="simple">
+<li><p><strong>ESP-NOW (Wi-Fi):</strong></p></li>
+<li><p><strong>声の出し方:</strong> 「早口で叫ぶ」</p></li>
+<li><p><strong>特徴:</strong> 壁にぶつかるとエネルギーが散って消えやすい。</p></li>
+<li><p><strong>Coded PHY (Bluetooth Long Range):</strong></p></li>
+<li><p><strong>声の出し方:</strong> 「低く、ゆっくり、ドスの効いた声で念仏を唱える」</p></li>
+<li><p><strong>特徴:</strong> <a href="#id59"><span class="problematic" id="id60">**</span></a>壁や障害物を回り込んだり、貫通したりする力が圧倒的に強い**（受信感度が -100dBm 以下まで粘れる）。</p></li>
+</ul>
+<p>今の「外廊下まで届いている」状況なら、Coded PHY に切り替えれば、余裕でドアを貫通して部屋の中まで届くはずです。</p>
+<p>### 結論とおすすめ</p>
+<p>今の「ギリギリ届かない」状況を打破するには、<a href="#id61"><span class="problematic" id="id62">**</span></a>C3（またはS3）をもう一つ買って、Coded PHY で接続する**のが正解です。</p>
+<p><strong>次の一手:</strong>
+もう一つ C3 をポチる決心がついたら、届くまでの間、今の ESP-NOW 構成で**「アンテナの向き」**や**「置き場所（窓際など）」**を工夫して、その「あと数メートル」を稼ぐ実験をしてみるのも面白いですよ（アルミホイルで反射板を作るとか…）。</p>
 </section>
 </section>
 
