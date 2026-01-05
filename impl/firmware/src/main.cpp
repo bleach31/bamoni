@@ -4,7 +4,7 @@
 
 // --- 設定値 ---
 #define WAKE_INTERVAL_SEC  180  // 3分ごとに起きる
-#define ADVERTISE_DUR_SEC  30   // 10秒間送信する
+#define ADVERTISE_DUR_SEC  10   // 10秒間送信する
 #define HISTORY_INTERVAL_MIN 12 // 履歴に残す間隔 (分)
 
 // 夜間モード設定 (時)
@@ -12,7 +12,7 @@
 #define NIGHT_END_HOUR   6
 
 // 電圧測定用
-#define PIN_BAT_VOLT A0      
+#define PIN_BAT_VOLT A0
 #define R1 100000.0
 #define R2 22000.0
 #define VOLTAGE_RATIO ((R1 + R2) / R2) 
@@ -64,13 +64,17 @@ void setup() {
   Serial.printf("Bamoni-P Wakeup #%d\n", bootCount + 1);
 
   // 1. 電圧計測
-  analogSetAttenuation(ADC_11db);
-  uint32_t adc_mv = analogReadMilliVolts(PIN_BAT_VOLT);
-  float car_voltage_mv = adc_mv * VOLTAGE_RATIO;
+  pinMode(PIN_BAT_VOLT, ANALOG);
+  uint32_t adc_mv = 0;
+  // 平均化
+  for(int i = 0; i < 16; i++) {
+    adc_mv = adc_mv + analogReadMilliVolts(PIN_BAT_VOLT); // ADC with correction   
+  }
+  float car_voltage_mv = VOLTAGE_RATIO * adc_mv / 16 ;
   
   // 初回起動時のみRTC初期化 (実際はスマホから合わせる機能が必要ですが、今はコンパイル時刻で)
   if (bootCount == 0) {
-    rtc.setTime(0, 0, 17, 1, 1, 2026); // 仮
+    rtc.setTime(0, 15, 12, 1, 1, 2026); // 仮
     // 履歴バッファクリア
     memset(historyBuffer, 0, sizeof(historyBuffer));
   }
@@ -152,13 +156,14 @@ void setup() {
     NimBLEAdvertisementData advData;
     advData.setName("bamoni-P");
     advData.setManufacturerData(payload);
-    pAdvertising->setAdvertisementData(advData);
     
+    pAdvertising->setAdvertisementData(advData);
     // 10秒間送信
     pAdvertising->start();
-    Serial.println("Advertising for 10s...");
+    Serial.printf("Advertising for %d sec...\n", ADVERTISE_DUR_SEC);
     delay(ADVERTISE_DUR_SEC * 1000);
     pAdvertising->stop(); // 明示的に停止
+    Serial.println("Stop Advertising for");
     
   } else {
     Serial.println("Night Mode: Skipping TX");
