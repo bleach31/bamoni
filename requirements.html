@@ -59,22 +59,14 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">要件定義</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id2">センサー要件</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id3">中継器要件</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id4">アプリ要件</a></li>
-<li class="toctree-l1"><a class="reference internal" href="#id5">非機能要件</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">要件定義</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id2">センサー要件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">中継器要件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">アプリ要件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">非機能要件</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="design.html">設計ドキュメント</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#mcu">MCU選定</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id2">電源回路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id3">電圧測定回路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id4">電流測定回路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id5">動作モード切替</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id6">中継器設計</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#ble">BLEパケット仕様</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id7">センサー設置設計</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id8">データ保存方式</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html#id9">通信方式の選定経緯</a></li>
 </ul>
 
         </div>
@@ -103,7 +95,7 @@
              
   <section id="id1">
 <h1>要件定義<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<div class="need_container docutils container" id="SNCB-9884a4b8">
+<div class="need_container docutils container" id="SNCB-50480bcd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SYS_ROOT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -142,10 +134,9 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-</section>
 <section id="id2">
-<h1>センサー要件<a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
-<div class="need_container docutils container" id="SNCB-b43f5492">
+<h2>センサー要件<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
+<div class="need_container docutils container" id="SNCB-8c963f2b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_MEASURE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -175,7 +166,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-c94ffe78">
+<div class="need_container docutils container" id="SNCB-1fc84cbd">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_POWER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -203,7 +194,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-0042c09a">
+<div class="need_container docutils container" id="SNCB-7480359d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_BLE_ACTIVE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -226,7 +217,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-e6b1ad5d">
+<div class="need_container docutils container" id="SNCB-c065f0c8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_BLE_PARKING">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -251,7 +242,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-4346f963">
+<div class="need_container docutils container" id="SNCB-1ae304d5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_STORAGE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -276,8 +267,8 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </div>
 </section>
 <section id="id3">
-<h1>中継器要件<a class="headerlink" href="#id3" title="Link to this heading"></a></h1>
-<div class="need_container docutils container" id="SNCB-3ed60f4a">
+<h2>中継器要件<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
+<div class="need_container docutils container" id="SNCB-5f2af0fa">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="RPT_CLOUD_SYNC">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -309,8 +300,8 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </div>
 </section>
 <section id="id4">
-<h1>アプリ要件<a class="headerlink" href="#id4" title="Link to this heading"></a></h1>
-<div class="need_container docutils container" id="SNCB-2fca7e1e">
+<h2>アプリ要件<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
+<div class="need_container docutils container" id="SNCB-4e1ecd18">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="APP_DATA_SYNC">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -338,7 +329,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-0d3af0b5">
+<div class="need_container docutils container" id="SNCB-7d36f8fb">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="APP_UI">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -369,8 +360,8 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </div>
 </section>
 <section id="id5">
-<h1>非機能要件<a class="headerlink" href="#id5" title="Link to this heading"></a></h1>
-<div class="need_container docutils container" id="SNCB-289072c1">
+<h2>非機能要件<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
+<div class="need_container docutils container" id="SNCB-d09f6cc6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_SAFETY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -393,7 +384,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-473b94c5">
+<div class="need_container docutils container" id="SNCB-ddb0f221">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_ENV">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -416,7 +407,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5e8d28c3">
+<div class="need_container docutils container" id="SNCB-81f290d9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_MAINTENANCE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -438,7 +429,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-664f6638">
+<div class="need_container docutils container" id="SNCB-d18eb2e9">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_ADC_ACCURACY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -466,7 +457,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-febb79aa">
+<div class="need_container docutils container" id="SNCB-cd148546">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_BLE_RANGE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -489,7 +480,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-7157fdea">
+<div class="need_container docutils container" id="SNCB-3e238df8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_CURRENT_CALIB">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -513,6 +504,7 @@ Google Driveを経由して複数ユーザーでデータを共有・管理す�
 </tbody>
 </table>
 </div>
+</section>
 </section>
 
 
