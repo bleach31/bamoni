@@ -22,11 +22,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - project: firmware
+          - project: firmware_sensor
             environment: seeed_xiao_esp32c3_main
-          - project: firmware
+          - project: firmware_sensor
             environment: c3_sender_test
-          - project: firmware
+          - project: firmware_sensor
             environment: 8266_receiver_test
           - project: firmware_repeater
             environment: seeed_xiao_esp32c3

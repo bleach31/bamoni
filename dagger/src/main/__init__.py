@@ -23,7 +23,7 @@ class Bamoni:
     async def build_firmware(
         self,
         source: dagger.Directory,
-        project: str = "firmware",
+        project: str = "firmware_sensor",
         environment: str = "",
     ) -> str:
         """Build PlatformIO firmware for the specified project and environment."""
