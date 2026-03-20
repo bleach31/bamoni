@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build docs
+        uses: dagger/dagger-for-github@v6
+        with:
+          verb: call
+          args: build-docs --source=.
+
+  build-firmware:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - project: firmware
+            environment: seeed_xiao_esp32c3_main
+          - project: firmware
+            environment: c3_sender_test
+          - project: firmware
+            environment: 8266_receiver_test
+          - project: firmware_repeater
+            environment: seeed_xiao_esp32c3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build ${{ matrix.project }} (${{ matrix.environment }})
+        uses: dagger/dagger-for-github@v6
+        with:
+          verb: call
+          args: build-firmware --source=. --project=${{ matrix.project }} --environment=${{ matrix.environment }}
