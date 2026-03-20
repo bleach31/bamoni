@@ -13,8 +13,13 @@ author = 'motohiro'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
+from docutils.parsers.rst import directives
+
 extensions = ["sphinx_needs", 'sphinxcontrib.plantuml']
 plantuml = 'java -jar /usr/share/plantuml/plantuml.jar'
+
+# sphinx-needs: カスタムオプション
+needs_extra_options = {"priority": directives.unchanged}
 
 templates_path = ['_templates']
 exclude_patterns = []
