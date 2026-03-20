@@ -6,17 +6,17 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>仕様検討メモ &mdash; bamoni  ドキュメント</title>
+  <title>設計ドキュメント &mdash; bamoni  ドキュメント</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
 
   
@@ -60,28 +60,21 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="requirements.html">要件定義</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">仕様検討メモ</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id2">概要</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">電源回路構成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id4">設計方針</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#power">回路図 (Power)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">電圧測定回路構成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id6">設計方針</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#voltage-sensing">回路図 (Voltage Sensing)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">計算式</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">実装上の注意</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id9">アドバタイズのデータ容量設計</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id26">アドバタイズ間隔について</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id43">スマホアプリ仕様、すれ違い通信による受信</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id48">設置場所問題</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#rtc-vs-flash">RTCメモリ vs Flash</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#esp-now">ESP NOW</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html#id2">センサー要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html#id3">中継器要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html#id4">アプリ要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="requirements.html#id5">非機能要件</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">設計ドキュメント</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#mcu">MCU選定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">電源回路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id3">電圧測定回路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id4">電流測定回路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id5">動作モード切替</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id6">中継器設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#ble">BLEパケット仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id7">センサー設置設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id8">データ保存方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id9">通信方式の選定経緯</a></li>
 </ul>
 
         </div>
@@ -98,7 +91,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">仕様検討メモ</li>
+      <li class="breadcrumb-item active">設計ドキュメント</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/design.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -109,7 +102,7 @@
            <div itemprop="articleBody">
              
   <section id="id1">
-<h1>仕様検討メモ<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
+<h1>設計ドキュメント<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
 <dl class="field-list simple">
 <dt class="field-odd">Author<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bamoni Project Team</p>
@@ -117,28 +110,81 @@
 <dt class="field-even">Status<span class="colon">:</span></dt>
 <dd class="field-even"><p>Draft</p>
 </dd>
-<dt class="field-odd">Device<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Seeed Studio XIAO ESP32C3</p>
-</dd>
 </dl>
-<section id="id2">
-<h2>概要<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<p>本ドキュメントは、車両用バッテリー監視システム「bamoni」のハードウェア回路設計について記述する。
-安全性と省電力性を最優先し、乾電池（ニッケル水素電池）駆動および高インピーダンス電圧測定回路を採用する。</p>
 </section>
-<section id="id3">
-<h2>電源回路構成<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<p>車両からの常時給電および充電は行わず、独立したニッケル水素電池（NiMH）4本による駆動とする。</p>
-<section id="id4">
-<h3>設計方針<a class="headerlink" href="#id4" title="Link to this heading"></a></h3>
+<section id="mcu">
+<h1>MCU選定<a class="headerlink" href="#mcu" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-bfbdc96d">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_MCU">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">MCU選定</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_MCU" title="DES_MCU">DES_MCU</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">mcu</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_MEASURE" title="DES_MCU">SEN_MEASURE</a>, <a class="reference internal" href="requirements.html#SEN_BLE_PARKING" title="DES_MCU">SEN_BLE_PARKING</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="#DES_REPEATER" title="DES_MCU">DES_REPEATER</a>, <a class="reference internal" href="#DES_COMM_SELECTION" title="DES_MCU">DES_COMM_SELECTION</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>採用:</strong> Seeed Studio XIAO ESP32C3</p>
+<p><strong>選定理由:</strong></p>
 <ul class="simple">
-<li><p><strong>安全性:</strong> 車内高温環境下でのリチウムイオン電池（Li-Po）の使用を回避する。</p></li>
-<li><p>[cite_start]**充電ICの制約:** XIAO ESP32C3搭載の充電IC（ETA4054）はリチウムイオン専用（4.2V充電停止）であり、NiMHの充電には不適合であるため使用しない [cite: 1, 10, 16]。</p></li>
+<li><p>BLE 5.0対応（Coded PHY / Long Range が使用可能）</p></li>
+<li><p>小型・安価</p></li>
+<li><p>Deep Sleep時の消費電流が低い</p></li>
+</ul>
+<p><strong>検討した代替案:</strong></p>
+<ul class="simple">
+<li><p>Seeed XIAO nRF52840 — Coded PHY対応だが、価格面で不採用。</p></li>
+</ul>
+<p><strong>備考:</strong></p>
+<ul class="simple">
+<li><p>センサーおよび中継器で同一MCUを採用し、ハードウェア・開発環境を共通化する。</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id2">
+<h1>電源回路<a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-76c58643">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_POWER">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電源回路設計</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_POWER" title="DES_POWER">DES_POWER</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">power</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_POWER" title="DES_POWER">SEN_POWER</a>, <a class="reference internal" href="requirements.html#NFR_SAFETY" title="DES_POWER">NFR_SAFETY</a>, <a class="reference internal" href="requirements.html#NFR_ENV" title="DES_POWER">NFR_ENV</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>方式:</strong> NiMH電池×4本（直列）による電池交換式。車両からの充電は行わない。</p>
+<p><strong>設計方針:</strong></p>
+<ul class="simple">
+<li><p><strong>安全性:</strong> 車内高温環境下でのリチウムイオン電池（Li-Po）の使用を回避し、NiMHを採用する。</p></li>
+<li><p><strong>充電ICの制約:</strong> XIAO ESP32C3搭載の充電IC（ETA4054）はリチウムイオン専用（4.2V充電停止）であり、NiMHの充電には不適合であるため使用しない。</p></li>
 <li><p><strong>保護:</strong> USB接続時の電源逆流防止および、NiMH 4本直列時の過電圧（約5.8V）をXIAOの許容範囲（5Vピン）へ適合させるため、整流用ダイオードを使用する。</p></li>
 </ul>
-</section>
-<section id="power">
-<h3>回路図 (Power)<a class="headerlink" href="#power" title="Link to this heading"></a></h3>
+<p><strong>見送り事項:</strong></p>
+<ul class="simple">
+<li><p>車両オルタネーターからのスマート充電（SEN_POWER）は、充電回路の複雑さから初版では見送り。電池交換で対応する。</p></li>
+<li><p>電池寿命の見積もりは初版実装後に実測ベースで評価する。</p></li>
+</ul>
+<p><strong>回路図:</strong></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>[ Battery Box ]             [ Protection ]           [ MCU ]
 
 NiMH x 4 (Series)
@@ -161,22 +207,40 @@ NiMH x 4 (Series)
 </dl>
 </li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
-</section>
-<section id="id5">
-<h2>電圧測定回路構成<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<p>車両の鉛バッテリー（12V系）の電圧を測定するため、分圧回路を用いてESP32C3のADC入力範囲（0-3.0V程度）に変換する。</p>
-<section id="id6">
-<h3>設計方針<a class="headerlink" href="#id6" title="Link to this heading"></a></h3>
+<section id="id3">
+<h1>電圧測定回路<a class="headerlink" href="#id3" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-7b305976">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_VOLT_SENSE">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電圧測定回路設計</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_VOLT_SENSE" title="DES_VOLT_SENSE">DES_VOLT_SENSE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_MEASURE" title="DES_VOLT_SENSE">SEN_MEASURE</a>, <a class="reference internal" href="requirements.html#NFR_SAFETY" title="DES_VOLT_SENSE">NFR_SAFETY</a>, <a class="reference internal" href="requirements.html#NFR_ADC_ACCURACY" title="DES_VOLT_SENSE">NFR_ADC_ACCURACY</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="#DES_GND" title="DES_VOLT_SENSE">DES_GND</a>, <a class="reference internal" href="#DES_SENSOR_PLACEMENT" title="DES_VOLT_SENSE">DES_SENSOR_PLACEMENT</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>車両の鉛バッテリー（12V系）の電圧を測定するため、分圧回路を用いてESP32C3のADC入力範囲（0〜3.0V程度）に変換する。</p>
+<p><strong>設計方針:</strong></p>
 <ul class="simple">
 <li><p><strong>暗電流対策:</strong> 常時接続となるため、高抵抗（合計122kΩ）を使用して消費電流を約0.1mAに抑える。</p></li>
 <li><p><strong>サージ対策:</strong> オルタネーターノイズやロードダンプからGPIOを保護するため、ツェナーダイオードとコンデンサを配置する。</p></li>
 </ul>
-</section>
-<section id="voltage-sensing">
-<h3>回路図 (Voltage Sensing)<a class="headerlink" href="#voltage-sensing" title="Link to this heading"></a></h3>
+<p><strong>回路図:</strong></p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>(Car Battery +)
-       |
        |
       [R1]  100kΩ
        |
@@ -188,288 +252,327 @@ NiMH x 4 (Series)
        |
        +-----&gt; [C1] Capacitor (0.1uF - 1uF) -&gt; GND (Noise Filter)
        |
-(Car Body GND)
-       |
-(XIAO GND)  &lt;-- Common GND Required
+(Car Body GND) --- (XIAO GND)
 </pre></div>
 </div>
-</section>
-<section id="id7">
-<h3>計算式<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p><strong>部品選定:</strong></p>
+<ul class="simple">
+<li><p>R1: 100kΩ（確定）</p></li>
+<li><p>R2: 22kΩ（確定）</p></li>
+<li><p>D1: ツェナーダイオード 3.6V（型番未定）</p></li>
+<li><p>C1: コンデンサ 0.1〜1μF（型番未定）</p></li>
+</ul>
+<p><strong>計算式:</strong></p>
 <ul>
-<li><p><strong>分圧比:</strong></p>
+<li><p>分圧比:</p>
 <div class="math notranslate nohighlight">
 \[V_{out} = V_{in} \times \frac{R2}{R1 + R2} = V_{in} \times \frac{22}{122} \approx \frac{V_{in}}{5.545}\]</div>
 </li>
-<li><p><strong>最大測定可能電圧:</strong>
-ESP32のADC最大入力（減衰最大時）を約3.3Vとした場合:</p>
+<li><p>最大測定可能電圧（ADC最大入力 3.3V 時）:</p>
 <div class="math notranslate nohighlight">
 \[V_{max} = 3.3V \times \frac{122}{22} \approx 18.3V\]</div>
-<p>通常の車両電圧（12.0V - 14.4V）に対し十分なマージンを持つ。</p>
+<p>通常の車両電圧（12.0V〜14.4V）に対し十分なマージンを持つ。</p>
 </li>
 </ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-800841ca">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_GND">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">GND共通化制約</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_GND" title="DES_GND">DES_GND</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">constraint</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#DES_VOLT_SENSE" title="DES_GND">DES_VOLT_SENSE</a></span></span></div>
+<div class="line">links incoming: <span class="links"><span><a class="reference internal" href="#DES_SENSOR_PLACEMENT" title="DES_GND">DES_SENSOR_PLACEMENT</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>電圧測定のため、電池駆動であってもセンサーのGNDを車両のボディアース（GND）に接続しなければならない。
+これは分圧回路の基準電位を車両側と共有するために必須の制約である。</p>
+<p><strong>備考:</strong> 抵抗器の誤差（通常5%）を補正するため、実測値を用いたソフトウェア補正係数の調整を推奨する。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
+<section id="id4">
+<h1>電流測定回路<a class="headerlink" href="#id4" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-4642afb2">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_CURRENT_SENSE">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電流測定回路設計</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_CURRENT_SENSE" title="DES_CURRENT_SENSE">DES_CURRENT_SENSE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_MEASURE" title="DES_CURRENT_SENSE">SEN_MEASURE</a>, <a class="reference internal" href="requirements.html#NFR_CURRENT_CALIB" title="DES_CURRENT_SENSE">NFR_CURRENT_CALIB</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>方式:</strong> ホール素子方式電流センサー（HSTS06L）を使用する。</p>
+<p><strong>ステータス:</strong> 部品は購入済み。初版では電流測定は実装せず、電圧測定のみとする。回路設計・ファームウェア対応は次版以降で行う。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id5">
+<h1>動作モード切替<a class="headerlink" href="#id5" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-992f5fac">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_MODE_SWITCH">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">動作モード切替設計</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_MODE_SWITCH" title="DES_MODE_SWITCH">DES_MODE_SWITCH</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">firmware</span><span class="needs_spacer">, </span><span class="needs_data">mode</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_BLE_ACTIVE" title="DES_MODE_SWITCH">SEN_BLE_ACTIVE</a>, <a class="reference internal" href="requirements.html#SEN_BLE_PARKING" title="DES_MODE_SWITCH">SEN_BLE_PARKING</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>初版方針:</strong> Parking Mode のみで動作する。Active Mode への切替および走行中／駐車中の判定方式は未検討。次版以降で対応する。</p>
+<p><strong>検討候補（次版以降）:</strong></p>
+<ul class="simple">
+<li><p>車両バッテリー電圧の閾値による判定（例：13.5V以上でオルタネーター稼働と判断）</p></li>
+<li><p>ACC電源との接続による判定</p></li>
+<li><p>加速度センサーの追加</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id6">
+<h1>中継器設計<a class="headerlink" href="#id6" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-b8e45950">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_REPEATER">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">中継器設計</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_REPEATER" title="DES_REPEATER">DES_REPEATER</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">firmware</span><span class="needs_spacer">, </span><span class="needs_data">repeater</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#RPT_CLOUD_SYNC" title="DES_REPEATER">RPT_CLOUD_SYNC</a>, <a class="reference internal" href="requirements.html#NFR_BLE_RANGE" title="DES_REPEATER">NFR_BLE_RANGE</a>, <a class="reference internal" href="#DES_MCU" title="DES_REPEATER">DES_MCU</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>役割:</strong> センサーのBLE Coded PHYパケットを受信し、自宅WiFi経由でGoogle Driveへデータを保存するゲートウェイ。</p>
+<p><strong>MCU:</strong> Seeed Studio XIAO ESP32C3（センサーと共通）</p>
+<p><strong>設置場所:</strong> 自宅の窓の外側。エアコンの壁穴を通してUSB給電する。</p>
+<p><strong>処理フロー:</strong></p>
+<ol class="arabic simple">
+<li><p>BLE Coded PHYでセンサーのアドバタイズパケットを常時スキャン</p></li>
+<li><p>パケット受信時、受信時刻をタイムスタンプとして付与</p></li>
+<li><p>パケット内の過去ログを展開し、測定間隔から各ログのタイムスタンプを推定</p></li>
+<li><p>自宅WiFiに接続し、Google Drive上のCSVファイルへ追記</p></li>
+</ol>
+<p><strong>未決定事項:</strong></p>
+<ul class="simple">
+<li><p>Google Drive APIへのアクセス方法（サービスアカウント？OAuth？Google Apps Script Webhook？）</p></li>
+<li><p>WiFi接続が切れた場合のローカルバッファリング</p></li>
+<li><p>CSVフォーマットの仕様</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="ble">
+<h1>BLEパケット仕様<a class="headerlink" href="#ble" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-1c64ca50">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_BLE_PACKET">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">BLEパケット設計 (Parking Mode)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_BLE_PACKET" title="DES_BLE_PACKET">DES_BLE_PACKET</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">firmware</span><span class="needs_spacer">, </span><span class="needs_data">ble</span><span class="needs_spacer">, </span><span class="needs_data">parking-mode</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_BLE_PARKING" title="DES_BLE_PACKET">SEN_BLE_PARKING</a>, <a class="reference internal" href="requirements.html#SEN_STORAGE" title="DES_BLE_PACKET">SEN_STORAGE</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Parking Mode時のBLEアドバタイズパケット仕様。Extended Advertising (BLE 5.x) を使用する。</p>
+<p><strong>容量制約:</strong></p>
+<ul class="simple">
+<li><p>Extended Advertising の1パケット上限は <strong>254バイト</strong> 。これを超えるとChaining（分割送信）が発生し、電池消費が増えるため、254バイト以内に収める。</p></li>
+<li><p>Manufacturer Data のオーバーヘッド（Length 1B + Type 1B + Company ID 2B = 4B）を除くと、自由データ領域は <strong>250バイト</strong> 。</p></li>
+</ul>
+<p><strong>パケットフォーマット（初版）:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Manufacturer Data (Type: 0xFF)
++-------------------+---------------------+----------------+--------------------+
+| Company ID (2B)   | Current Voltage (2B) | History Count  | History[0..N] (2B  |
+| 0xFFFF            | mV単位               | (1B)           |  x N)              |
++-------------------+---------------------+----------------+--------------------+
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Company ID: 0xFFFF（テスト用）</p></li>
+<li><p>Current Voltage: 現在の車両バッテリー電圧（mV, uint16_t）</p></li>
+<li><p>History Count: 履歴データ件数（uint8_t）</p></li>
+<li><p>History[]: 過去の電圧データ（mV, uint16_t配列、最新から過去へ順に並ぶ）</p></li>
+</ul>
+<p><strong>容量計算:</strong></p>
+<ul class="simple">
+<li><p>CompanyID(2) + CurVolt(2) + Count(1) + History(2 x 48) = 101バイト（254バイト以内、分割なし）</p></li>
+<li><p>12分間隔 × 48件 = 9.6時間分の過去データを1パケットに格納可能</p></li>
+</ul>
+<p><strong>アドバタイズ送信時間:</strong></p>
+<ul class="simple">
+<li><p>起床ごとに <strong>10秒間</strong> アドバタイズを送出する。</p></li>
+<li><p>中継器が常時スキャンしているため、1回の送出で十分受信可能。</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id7">
+<h1>センサー設置設計<a class="headerlink" href="#id7" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-d4c2cef7">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_SENSOR_PLACEMENT">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">センサー設置方針</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_SENSOR_PLACEMENT" title="DES_SENSOR_PLACEMENT">DES_SENSOR_PLACEMENT</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span><span class="needs_spacer">, </span><span class="needs_data">placement</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="#DES_VOLT_SENSE" title="DES_SENSOR_PLACEMENT">DES_VOLT_SENSE</a>, <a class="reference internal" href="#DES_GND" title="DES_SENSOR_PLACEMENT">DES_GND</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>センサー本体（XIAO ESP32C3）はアンテナ性能を最大化するため、車両のルーフ付近など電波が飛びやすい位置に設置する。
+バッテリー付近にセンサーを置いてアンテナケーブルを延長する方式は、高周波ケーブルのロスとコストの面から不採用とする。</p>
+<p><strong>方式:</strong> 電源線およびセンサーケーブル（電圧測定線）を延長し、XIAO本体ごと設置場所に配置する。</p>
+<ul class="simple">
+<li><p>電池ボックスと分圧回路は安全な場所に設置</p></li>
+<li><p>VCC、GND、アナログ入力の3本を電線で延長（2m程度）</p></li>
+<li><p>XIAOはタッパー等の小型ケースに入れて設置</p></li>
+</ul>
+<p><strong>利点:</strong></p>
+<ul class="simple">
+<li><p>同軸ケーブル不要（コスト: 数百円）</p></li>
+<li><p>アンテナが直結のまま → 感度最大</p></li>
+<li><p>特殊工具不要（ハンダ付けのみ）</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="id8">
-<h2>実装上の注意<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
-<ol class="arabic simple">
-<li><p><strong>GND共通化:</strong> 電圧測定のため、電池駆動であってもXIAOのGNDを車両のボディアース（GND）に接続する必要がある。</p></li>
-<li><p><strong>キャリブレーション:</strong> 抵抗器の誤差（通常5%）を補正するため、実測値を用いたソフトウェア補正係数の調整を推奨する。</p></li>
-</ol>
+<h1>データ保存方式<a class="headerlink" href="#id8" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-ce74ec94">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_RTC_MEMORY">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">RTC メモリによるデータ保持</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_RTC_MEMORY" title="DES_RTC_MEMORY">DES_RTC_MEMORY</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">firmware</span><span class="needs_spacer">, </span><span class="needs_data">storage</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_STORAGE" title="DES_RTC_MEMORY">SEN_STORAGE</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>計測データの履歴はFlashではなく <strong>RTCメモリ</strong> に保持する。</p>
+<p><strong>理由:</strong></p>
+<ul class="simple">
+<li><p>Deep Sleep中もデータが消えない</p></li>
+<li><p>読み書きが高速で消費電力がほぼゼロ</p></li>
+<li><p>Flashは頻繁な書き込み（12分毎）で寿命・消費電力の面で不利</p></li>
+</ul>
+<p><strong>制約:</strong></p>
+<ul class="simple">
+<li><p>電池交換時にデータは消失する（許容範囲：電池交換前に中継器が最新データを受信済みであればよい）</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 <section id="id9">
-<h2>アドバタイズのデータ容量設計<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
-<p>BLEのアドバタイズで送れるデータ容量は、<a href="#id10"><span class="problematic" id="id11">**</span></a>「従来のモード」**か**「Coded PHY (Extended Advertising) モード」**かで劇的に変わります。</p>
-<p>今回のbamoni（Coded PHY）で使う**Extended Advertising**なら、<strong>最大 1650バイト</strong> まで送れます（理論値）。</p>
-<p>ただし、扱いやすさと通信効率の面で「壁」がいくつかあるので、詳しく解説します。</p>
-<p>### 1. モードによる容量の違い</p>
-<div class="line-block">
-<div class="line">モード | 最大容量 | 補足 |</div>
-<div class="line">--- | --- | --- |</div>
-<div class="line"><a href="#id12"><span class="problematic" id="id13">**</span></a>Legacy Advertising**&lt;br&gt;</div>
+<h1>通信方式の選定経緯<a class="headerlink" href="#id9" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-d810588f">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_COMM_SELECTION">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Specification</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">通信方式選定: ESP-NOW vs BLE Coded PHY</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DES_COMM_SELECTION" title="DES_COMM_SELECTION">DES_COMM_SELECTION</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
-<p>&lt;br&gt;(従来のBLE 4.x) | <strong>31 バイト</strong> | 非常に少ないです。Flagsや名前を入れると、データ用には実質20バイト程度しか残りません。 |
-| <a href="#id14"><span class="problematic" id="id15">**</span></a>Extended Advertising**&lt;br&gt;</p>
-<p>&lt;br&gt;(BLE 5.x / Coded PHY) | <strong>1650 バイト</strong> | 今回はこちらを使います。ただし、パケットが分割（チェーン）されるため、いくつか注意点があります。 |</p>
-<p>### 2. Extended Advertising の「254バイトの壁」</p>
-<p>1650バイト送れるとはいえ、1つの電波の塊（パケット）に詰め込めるのは <strong>254バイト</strong> までです。これを超えると「Chaining（パケット分割）」が発生します。</p>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">design</span><span class="needs_spacer">, </span><span class="needs_data">communication</span><span class="needs_spacer">, </span><span class="needs_data">decision</span></span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links outgoing: <span class="links"><span><a class="reference internal" href="requirements.html#SEN_BLE_PARKING" title="DES_COMM_SELECTION">SEN_BLE_PARKING</a>, <a class="reference internal" href="#DES_MCU" title="DES_COMM_SELECTION">DES_MCU</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p><strong>採用:</strong> BLE Coded PHY (Bluetooth Long Range)</p>
+<p><strong>経緯:</strong></p>
+<p>初期段階では、手持ちの受信機が ESP8266（Bluetooth非搭載）であったため、
+ESP32-C3（送信側）と ESP8266（受信側）の共通通信手段として <strong>ESP-NOW（WiFi系プロトコル）</strong> を使用していた。</p>
+<p>しかし、実地テスト（駐車場→自宅間）にて ESP-NOW では壁の貫通力が不足し、通信距離が足りないことが判明。</p>
+<p><strong>ESP-NOW と Coded PHY の比較:</strong></p>
 <ul class="simple">
-<li><p><strong>254バイト以内:</strong></p></li>
-<li><p>1回の送信で完結します。<a href="#id16"><span class="problematic" id="id17">**</span></a>最も効率が良く、受信側の取りこぼしも少ない**です。</p></li>
-<li><p>「現在値」＋「過去ログ数回分」ならここに収めるのがベストです。</p></li>
-<li><p><strong>254バイト超 〜 1650バイト:</strong></p></li>
-<li><p>スマホ側は、複数のパケットを連続受信して結合する処理が必要になります。</p></li>
-<li><p>Coded PHY（通信速度が遅い）でこれをやると、<strong>通信時間（Air Time）が長くなり、電池消費が増えます</strong>。</p></li>
+<li><p><strong>ESP-NOW (WiFi):</strong> 通信速度は速いが、壁を貫通する力が弱い。ESP8266でも使用可能。</p></li>
+<li><p><strong>Coded PHY (BLE Long Range):</strong> 通信速度は遅い（125kbps）が、受信感度が高く（-100dBm以下）、壁や障害物を越える能力が圧倒的に優れる。</p></li>
 </ul>
-<p>### 3. 実質使えるデータサイズ (Overheadの計算)</p>
-<p>「254バイト」まるまる使えるわけではありません。アドバタイズパケットには必ず「ヘッダ（管理情報）」がつきます。</p>
-<p><strong>Manufacturer Data (マニュファクチャラデータ) を使う場合の構成:</strong></p>
-<p><a href="#id18"><span class="problematic" id="id19">``</span></a><a href="#id20"><span class="problematic" id="id21">`</span></a>text
-[ 全体: 最大 254 バイト (分割なしの場合) ]
------------------------------------------------------------
-| Length (1B) | Type (1B) | Company ID (2B) |  ★自由データ  |
------------------------------------------------------------</p>
-<p><a href="#id22"><span class="problematic" id="id23">``</span></a><a href="#id24"><span class="problematic" id="id25">`</span></a></p>
-<ul class="simple">
-<li><p><strong>Length:</strong> 1バイト</p></li>
-<li><p><strong>Type:</strong> 1バイト (0xFF = Manufacturer Data)</p></li>
-<li><p><strong>Company ID:</strong> 2バイト (0xFFFFなど)</p></li>
-<li><p><strong>合計オーバーヘッド:</strong> <strong>4バイト</strong></p></li>
-</ul>
-<p>つまり、分割なしで送れる純粋なデータ量は <strong>250バイト</strong> です。</p>
-<p>### 4. bamoniへの適用アドバイス</p>
-<p>現在設計中の <cite>SensorData</cite> 構造体や、要件にある「過去ログ」を考えると、以下のように計算できます。</p>
-<ul class="simple">
-<li><p><strong>現在のデータ構造:</strong></p></li>
-<li><p><cite>timestamp</cite> (4B) + <cite>voltage</cite> (2B) + <cite>current</cite> (2B) + <cite>battery</cite> (1B) = <strong>約 9バイト</strong></p></li>
-<li><p>余裕しゃくしゃくです。</p></li>
-<li><p><strong>過去ログを積む場合:</strong></p></li>
-<li><p>例えば、ログ1件あたり 5バイト（時刻差分1B + 電圧2B + 電流2B）に圧縮したとします。</p></li>
-<li><p>空き容量 (約240バイト) ÷ 5バイト = <strong>48件分</strong></p></li>
-<li><p>10分おきのログなら、48件 × 10分 = <strong>8時間分の過去データ</strong> を1パケットに載せられます！</p></li>
-</ul>
-<p>### 結論</p>
-<p><strong>「分割なしで送れる 250バイト」</strong> を目安に設計するのが一番安全で省電力です。
-250バイトあれば、今のbamoniの要件（数回分のログによる冗長化）には十分すぎます。</p>
-<p>もしそれを超える大量のデータ（数日分のログなど）を送りたい場合は、アドバタイズに載せるのをやめて、<strong>「接続（Connect）してからダウンロードする」</strong> 方式に切り替えるのが定石です。</p>
-</section>
-<section id="id26">
-<h2>アドバタイズ間隔について<a class="headerlink" href="#id26" title="Link to this heading"></a></h2>
-<p>「10分に1回の電波を廊下で待つ」のは、まさに「待ちぼうけ」状態で苦行すぎますね。冬場や夏場だと地獄です。</p>
-<p>この問題を解決する、現実的なアプローチを <strong>「松・竹・梅」</strong> の3段階で提案します。</p>
-<p>---</p>
-<p>### 【松】自宅の窓際に「中継機（ゲートウェイ）」を置く（推奨）</p>
-<p>これが**最強かつ最もスマートな解決策**です。お手元にもう一台ESP32-C3があればすぐできます。</p>
-<ul class="simple">
-<li><p><strong>仕組み:</strong></p></li>
-</ul>
-<ol class="arabic simple">
-<li><p><strong>中継機（受信機）</strong> を、駐車場に一番近い自宅の窓際やベランダに設置します（AC電源で常時稼働）。</p></li>
-<li><p>こいつは <strong>24時間365日、Coded PHYをスキャン</strong> し続けます。</p></li>
-<li><p>10分に1回、車からのパケットを受信したら、メモリに最新情報を保存します。</p></li>
-<li><p><strong>人間（あなた）</strong> は、廊下に出る必要はありません。部屋の中からこの中継機に（Wi-Fiや普通のBLEで）アクセスすれば、<strong>「最後に受信したデータ」を瞬時に見れます</strong>。</p></li>
-</ol>
-<ul class="simple">
-<li><p><strong>メリット:</strong> 待ち時間ゼロ。寒くない。Google Sheetsへのアップロード機能などもここに追加できます。</p></li>
-<li><p><strong>デメリット:</strong> もう一台ESP32が必要。</p></li>
-</ul>
-<p>### 【竹】送信時間を長くする（バースト送信）</p>
-<p>デバイス単体でなんとかする案です。</p>
-<ul class="simple">
-<li><p><strong>仕組み:</strong></p></li>
-<li><p>「起きて1回送信して即寝る（送信時間0.1秒）」だから捕まらないのです。</p></li>
-<li><p><strong>「起きて、10秒間〜30秒間アドバタイズし続けてから、寝る」</strong> ように変更します。</p></li>
-<li><p><strong>使い方:</strong></p></li>
-<li><p>廊下に出てnRF Connectを開けば、最長でも10分待てば**確実に**拾えます（一瞬で消えたりしない）。</p></li>
-<li><p>ただ、「いつ来るかわからない」ので待つ必要はあります。</p></li>
-<li><p><strong>電池への影響:</strong> 送信時間を延ばす分、消費電力は増えますが、10分に1回の頻度なら30秒送信してもエネループなら許容範囲です。</p></li>
-</ul>
-<p>### 【梅】過去データ（ヒストリー）を全部乗っける</p>
-<p>これは「待ち時間」の解決にはなりませんが、「せっかく捕まえたのに、今の瞬間のデータしか見れない」という悲劇を防ぎます。</p>
-<ul class="simple">
-<li><p><strong>仕組み:</strong></p></li>
-<li><p>アドバタイズパケットの中に、<strong>「現在値」＋「過去1時間分（10分x6回分）のデータ」</strong> を全部詰め込みます。</p></li>
-<li><p><strong>効果:</strong></p></li>
-<li><p>廊下で頑張って1回受信さえすれば、過去の推移も全部取れるので、「さっき受信し損ねた分」も回収できます。</p></li>
-</ul>
-<p>---</p>
-<p>### おすすめの組み合わせ</p>
-<p><strong>【松（中継機）】</strong> を目指しつつ、まずは <strong>【竹（送信時間延長）】</strong> で実装するのが良いでしょう。</p>
-<p>コードの修正は簡単です。<cite>setup()</cite> の最後を変えるだけです。</p>
-<p><strong>修正前:</strong></p>
-<dl>
-<dt><a href="#id27"><span class="problematic" id="id28">``</span></a><a href="#id29"><span class="problematic" id="id30">`</span></a>cpp</dt><dd><p>// アドバタイズ開始
-pAdvertising-&gt;start();
-delay(2000); // 2秒だけ出して寝る</p>
-<p>// 寝る準備...</p>
-</dd>
-</dl>
-<p><a href="#id31"><span class="problematic" id="id32">``</span></a><a href="#id33"><span class="problematic" id="id34">`</span></a></p>
-<p><strong>修正後（30秒出し続ける）:</strong></p>
-<dl>
-<dt><a href="#id35"><span class="problematic" id="id36">``</span></a><a href="#id37"><span class="problematic" id="id38">`</span></a>cpp</dt><dd><p>// アドバタイズ開始
-pAdvertising-&gt;start();</p>
-<p>// 30秒間、ひたすら電波を出し続ける（この間、スマホで見つけやすくなる）
-delay(30000);</p>
-<p>// 寝る準備...</p>
-</dd>
-</dl>
-<p><a href="#id39"><span class="problematic" id="id40">``</span></a><a href="#id41"><span class="problematic" id="id42">`</span></a></p>
-<p>まずはこれを試してみて、それでも「待つのダルい！」となったら、2台目のESP32を窓際に配備しましょう。どうしますか？</p>
-</section>
-<section id="id43">
-<h2>スマホアプリ仕様、すれ違い通信による受信<a class="headerlink" href="#id43" title="Link to this heading"></a></h2>
-<p>ご想像の通り、スマホでの「常駐（バックグラウンド）スキャン」は、<a href="#id44"><span class="problematic" id="id45">**</span></a>技術的な難易度というより、OS（Android/iOS）の仕様との戦い**という意味でハードルが高いです。</p>
-<p>ですが、エレベーターや徒歩移動中の「すれ違い通信（Drive-by Download）」は非常に魅力的ですよね。
-実現するための現実的なルートを3つ（難易度順）紹介します。</p>
-<p>---</p>
-<p>### ルートA：自作アプリを作る（Flutter推奨）</p>
-<p><strong>難易度：中〜高</strong>
-<strong>自由度：最高</strong></p>
-<p>もしご自身でアプリを作ってみたいなら、<a href="#id46"><span class="problematic" id="id47">**</span></a>Flutter**（Google製のクロスプラットフォーム開発フレームワーク）を使うのが一番の近道です。JavaやKotlinでゼロから書くより圧倒的に楽です。</p>
-<ul class="simple">
-<li><p><strong>ライブラリ:</strong> <cite>flutter_blue_plus</cite> という神ライブラリがあり、最近のアップデートで <strong>Coded PHY</strong> にも対応しました。</p></li>
-<li><p><strong>常駐の壁:</strong> Androidは電池持ちを良くするため、バックグラウンドのアプリを容赦なくキル（停止）します。これを防ぐには、<strong>「フォアグラウンドサービス」</strong> という仕組みを使います。</p></li>
-<li><p>LINEの通話中や、音楽プレーヤーのように、通知バーに「bamoniスキャン中」というアイコンを常に出し続けることで、OSに「このアプリは仕事中だから殺さないで！」とアピールします。</p></li>
-<li><p><strong>実装イメージ:</strong></p></li>
-</ul>
-<ol class="arabic simple">
-<li><p>アプリ起動 → 通知を出して常駐開始。</p></li>
-<li><p>画面が消えてもウラでCoded PHYスキャンを回し続ける。</p></li>
-<li><p><cite>Manufacturer Data</cite> (0xFFFF...) を見つけたら、Google Sheets APIを叩いて送信。</p></li>
-</ol>
-<p>### ルートB：自動化アプリ「MacroDroid」を使う</p>
-<p><strong>難易度：低</strong>
-<strong>自由度：中</strong></p>
-<p>コードを書かずに、「もし〜なら、〜する」という設定だけでアプリを作れるツールです。「Tasker」よりも直感的で簡単です。</p>
-<p>1. <strong>トリガー:</strong> 「Bluetoothビーコンを検知した時」
-* ここで <cite>bamoni-P</cite> のMACアドレスやUUIDを指定します。</p>
-<p>2. <strong>アクション:</strong> 「Webhook送信（HTTP GET）」
-* Google Apps Script (GAS) のURLを叩いて、現在時刻などを記録させる。</p>
-<p>3. <strong>懸念点:</strong>
-* MacroDroid標準の検知機能が、マニアックな <strong>Coded PHY</strong> の電波をちゃんと拾ってくれるか（Legacyしか見ていない可能性）が賭けになります。もし拾えれば、これが一番楽な解決策です。</p>
-<p>### ルートC：専用のロガーアプリを使う</p>
-<p><strong>難易度：極低</strong>
-<strong>自由度：低</strong></p>
-<p>すでに世の中にある「BLEをスキャンしてネットに投げる」専用アプリを使います。</p>
-<ul class="simple">
-<li><p><strong>例:</strong> <strong>&quot;MQTT Analyzer&quot;</strong> や <strong>&quot;BLE to MQTT&quot;</strong> 系のアプリ</p></li>
-<li><p>これらは最初から「常駐」を前提に作られているので、途中で止まる心配が少ないです。</p></li>
-<li><p>ただし、送り先がGoogle Sheetsではなく「MQTTブローカー」などになるため、受け皿側のサーバー設定が少し必要になります。</p></li>
-</ul>
-<p>---</p>
-<p>### 私の推奨</p>
-<p>まずは <strong>ルートB（MacroDroid）</strong> を試してみるのが良いでしょう。
-無料版で試せますし、もしこれで <cite>bamoni</cite> の電波（Coded PHY）が反応するなら、アプリ開発の手間がゼロになります。</p>
-<p>もしMacroDroidがCoded PHYに反応しなかった場合は、<strong>ルートA（Flutterでの自作）</strong> に挑戦するか、前述の「自宅窓際ゲートウェイ（ESP32）」で解決するか、の二択になります。</p>
-<p>エレベーターや徒歩でのピックアップ、ロマンがあって良いですね！
-MacroDroid、試してみる価値はあると思いますよ。</p>
-</section>
-<section id="id48">
-<h2>設置場所問題<a class="headerlink" href="#id48" title="Link to this heading"></a></h2>
-<p>アンテナを窓まで伸ばすべきか？</p>
-<p>２メートルも伸ばすとなると、アンテナ用の同軸ケーブルで延長するのは**「コスト」**と**「電波の減衰（ロス）」**の両面であまり得策ではありません。</p>
-<p>最も安く、かつ通信性能を落とさずに済む「裏技（というか正攻法）」から順に紹介します。</p>
-<p>### 方法1：【推奨】アンテナは伸ばさず、電源・信号線を伸ばす（最安・最強）</p>
-<p>これが**一番安く（数百円）、電波も最強**の状態を維持できる方法です。</p>
-<ul class="simple">
-<li><p><strong>考え方:</strong></p></li>
-<li><p>アンテナケーブル（高周波）を2m伸ばすと、電波がケーブルの中で半分くらい熱になって消えてしまいます（ロス）。しかもケーブルが高いです。</p></li>
-<li><p>代わりに、<strong>XIAO本体ごとアンテナを設置したい場所（ルーフ付近など）に持って行ってしまい</strong>、そこまでの「電源線」と「電圧測定用の線」を普通の電線で2m伸ばします。</p></li>
-<li><p><strong>コスト:</strong></p></li>
-<li><p><a href="#id49"><span class="problematic" id="id50">**</span></a>約100円〜200円**（ホームセンターの切り売り電線や、Amazonの細い電線でOK）。</p></li>
-<li><p><strong>やり方:</strong></p></li>
-<li><p>電池ボックスと分圧回路は手元（安全な場所）に置く。</p></li>
-<li><p>そこからXIAOまでの配線（VCC, GND, アナログ入力の3本）を2mの電線で延長してハンダ付けする。</p></li>
-<li><p>これなら電気的なロスはほぼゼロで、アンテナはXIAO直結なので感度MAXです。</p></li>
-</ul>
-<p>---</p>
-<p>### 方法2：Wi-Fi用の延長ケーブルを使う（一般的）</p>
-<p>どうしても「本体は手元、アンテナだけ遠く」にしたい場合は、市販のWi-Fi用延長ケーブルを使います。</p>
-<ul class="simple">
-<li><p><strong>考え方:</strong></p></li>
-<li><p>XIAOの端子を一般的な「SMA」という太い端子に変換し、そこから太めのケーブルで延長します。</p></li>
-<li><p><strong>買うもの（合計 1,000円〜1,500円程度）:</strong></p></li>
-</ul>
-<ol class="arabic simple">
-<li><p><strong>変換ケーブル:</strong> U.FL(IPEX) → RP-SMAメス（短いもの）</p></li>
-</ol>
-<p>2. <strong>延長ケーブル:</strong> RP-SMA オス-メス 延長ケーブル（2m）
-* Amazonで「WiFi アンテナ 延長ケーブル」と検索すると出てきます。</p>
-<ul class="simple">
-<li><p><strong>注意点:</strong></p></li>
-<li><p><strong>端子の種類:</strong> Wi-Fi用は通常**「RP-SMA（リバースポーラリティ）」**という規格です。「ピンがどっちに出ているか」が複雑なので、「Wi-Fi用」と書かれたセット品を買うのが無難です。</p></li>
-<li><p><strong>ロス:</strong> 2m伸ばすと、電波強度が少し落ちます（Coded PHYの距離が1割〜2割減るイメージ）。</p></li>
-</ul>
-<p>---</p>
-<p>### 結論：どっちがいい？</p>
-<p><strong>「方法1（電線を伸ばす）」</strong> を強くおすすめします。</p>
-<ul class="simple">
-<li><p><strong>安い:</strong> 同軸ケーブルは高いですが、ただの電気コードは安いです。</p></li>
-<li><p><strong>性能が良い:</strong> アンテナ直結が一番飛びます。</p></li>
-<li><p><strong>加工が楽:</strong> 特殊なコネクタのカシメ工具などが不要で、ハンダ付けやビニールテープだけで済みます。</p></li>
-</ul>
-<p>XIAO本体をタッパーなどの小さなケースに入れて、アンテナを立てたい場所に貼り付け、そこから電線を2m引っ張ってくるのがベストプラクティスです。</p>
-</section>
-<section id="rtc-vs-flash">
-<h2>RTCメモリ vs Flash<a class="headerlink" href="#rtc-vs-flash" title="Link to this heading"></a></h2>
-<p>「Flashへの書き込み」についてですが、頻繁な書き込み（3分や12分毎）は書き込み時間の遅延と消費電力、そして寿命の観点から**「RTCメモリ」**の使用を強く推奨します。</p>
-<p>RTCメモリ: Deep Sleep中もデータが消えず、読み書きが一瞬で、電力消費もゼロに等しいです。電池交換をしない限りデータは残ります。</p>
-<p>Flash: 電源が完全に断たれても残りますが、書き込みに電力を食います。</p>
-</section>
-<section id="esp-now">
-<h2>ESP NOW<a class="headerlink" href="#esp-now" title="Link to this heading"></a></h2>
-<p>実験の結果、ESP NOWはCODED phyに比べて通信距離がわずかに劣ることがわかった。
-「あと少しで届くのに！」という一番悔しい、でも貴重な結果が出ましたね。
-外廊下まで来ているなら、壁一枚、ドア一枚の差ですね。</p>
-<p>ご質問の**「なぜESP-NOWにしたんだっけ？」**という点と、<a href="#id51"><span class="problematic" id="id52">**</span></a>「C3を買い足したら届くのか？」**について整理します。</p>
-<p>### 1. なぜ「ESP-NOW」を選んだのか？</p>
-<p>理由は一つだけ、<strong>「手持ちの受信機が ESP8266 だったから」</strong> です。</p>
-<ul class="simple">
-<li><p><strong>ESP32-C3 (送信側):</strong> 「ESP-NOW」も「Bluetooth Long Range (Coded PHY)」も両方しゃべれます。</p></li>
-<li><p><strong>ESP8266 (受信側):</strong> <a href="#id53"><span class="problematic" id="id54">**</span></a>「ESP-NOW」しかしゃべれません。<a href="#id55"><span class="problematic" id="id56">**</span></a>（Bluetooth機能がないため）</p></li>
-</ul>
-<p>つまり、C3君が、性能の低い8266おじいちゃんに合わせて、<strong>わざわざ飛距離の落ちる「ESP-NOW」という共通言語で話してあげていた</strong>、というのが今の状況です。</p>
-<p>### 2. C3をもう一つ買ったら届くか？</p>
-<p><strong>結論：間違いなく届くようになります。</strong></p>
-<p>ただし、それは「アンテナが良くなるから」ではありません。<a href="#id57"><span class="problematic" id="id58">**</span></a>「通信方式を Coded PHY (Bluetooth Long Range) に切り替えられるから」**です。</p>
-<p>もし C3 を買い足しても、<strong>ESP-NOW のままだと、結果は今とほとんど変わらない（あるいは誤差レベルの改善）</strong> でしょう。Wi-Fiの電波特性としての限界（壁の貫通力不足）に達しているからです。</p>
-<p>### 3. なぜ Coded PHY なら届くのか？</p>
-<p>C3 同士になれば、封印していた <strong>Bluetooth Long Range (Coded PHY)</strong> が使えます。これが ESP-NOW とはどう違うのか、イメージで言うとこうです。</p>
-<ul class="simple">
-<li><p><strong>ESP-NOW (Wi-Fi):</strong></p></li>
-<li><p><strong>声の出し方:</strong> 「早口で叫ぶ」</p></li>
-<li><p><strong>特徴:</strong> 壁にぶつかるとエネルギーが散って消えやすい。</p></li>
-<li><p><strong>Coded PHY (Bluetooth Long Range):</strong></p></li>
-<li><p><strong>声の出し方:</strong> 「低く、ゆっくり、ドスの効いた声で念仏を唱える」</p></li>
-<li><p><strong>特徴:</strong> <a href="#id59"><span class="problematic" id="id60">**</span></a>壁や障害物を回り込んだり、貫通したりする力が圧倒的に強い**（受信感度が -100dBm 以下まで粘れる）。</p></li>
-</ul>
-<p>今の「外廊下まで届いている」状況なら、Coded PHY に切り替えれば、余裕でドアを貫通して部屋の中まで届くはずです。</p>
-<p>### 結論とおすすめ</p>
-<p>今の「ギリギリ届かない」状況を打破するには、<a href="#id61"><span class="problematic" id="id62">**</span></a>C3（またはS3）をもう一つ買って、Coded PHY で接続する**のが正解です。</p>
-<p><strong>次の一手:</strong>
-もう一つ C3 をポチる決心がついたら、届くまでの間、今の ESP-NOW 構成で**「アンテナの向き」**や**「置き場所（窓際など）」**を工夫して、その「あと数メートル」を稼ぐ実験をしてみるのも面白いですよ（アルミホイルで反射板を作るとか…）。</p>
-</section>
+<p><strong>結論:</strong></p>
+<p>受信機を ESP8266 から ESP32-C3 に変更し、BLE Coded PHY を採用することで通信距離の問題を解決した。
+ESP-NOW は不採用。test_esp-now/ 以下のコードは実験用として残置。</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 
 

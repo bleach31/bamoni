@@ -12,11 +12,11 @@
       <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
-      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_style.css?v=92936fa5" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
       <link rel="stylesheet" type="text/css" href="_static/sphinx-needs/modern.css?v=803738c0" />
 
   
@@ -34,7 +34,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
-    <link rel="next" title="仕様検討メモ" href="design.html" />
+    <link rel="next" title="設計ドキュメント" href="design.html" />
     <link rel="prev" title="bamoni documentation" href="index.html" /> 
 </head>
 
@@ -60,7 +60,21 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">要件定義</a></li>
-<li class="toctree-l1"><a class="reference internal" href="design.html">仕様検討メモ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">センサー要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id3">中継器要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id4">アプリ要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#id5">非機能要件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html">設計ドキュメント</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#mcu">MCU選定</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id2">電源回路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id3">電圧測定回路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id4">電流測定回路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id5">動作モード切替</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id6">中継器設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#ble">BLEパケット仕様</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id7">センサー設置設計</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id8">データ保存方式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="design.html#id9">通信方式の選定経緯</a></li>
 </ul>
 
         </div>
@@ -89,7 +103,7 @@
              
   <section id="id1">
 <h1>要件定義<a class="headerlink" href="#id1" title="Link to this heading"></a></h1>
-<div class="need_container docutils container" id="SNCB-ca166a24">
+<div class="need_container docutils container" id="SNCB-9884a4b8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="SYS_ROOT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -105,80 +119,83 @@
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>車両バッテリーの電圧・電流を監視・ロギングするデバイスを作成し、スマートフォンアプリおよびGoogle Driveを経由して、複数ユーザーでデータを共有・管理するシステム。</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr class="docutils" />
-<div class="need_container docutils container" id="SNCB-3e020212">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_MEASURE">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">計測パラメータ</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_MEASURE" title="DEV_MEASURE">DEV_MEASURE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span></span></span></div>
-</span></span></div>
-<div class="line"><span></span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>デバイスは以下の項目を計測・保持しなければならない。</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>車両バッテリーの電圧・電流を監視・ロギングし、
+Google Driveを経由して複数ユーザーでデータを共有・管理するシステム。</p>
+<p><strong>データ収集の目的:</strong></p>
 <ul class="simple">
-<li><p>車両バッテリー電圧</p></li>
-<li><p>車両バッテリー電流（充放電方向の識別必須）</p></li>
-<li><p>デバイス内蔵バッテリー電圧</p></li>
-<li><p>現在時刻（RTC）</p></li>
+<li><p><strong>長期傾向データ:</strong> バッテリー電圧・電流の長期的な変化を記録し、バッテリー劣化を検知する。</p></li>
+<li><p><strong>短期高頻度データ:</strong> 走行中の充放電パターンを高頻度で記録し、車両の充電制御戦略を分析する。</p></li>
+</ul>
+<p><strong>システム構成:</strong></p>
+<ul class="simple">
+<li><p><strong>センサー:</strong> 車両に設置し、バッテリーの電圧等を計測・BLE送信するデバイス</p></li>
+<li><p><strong>中継器:</strong> センサーのBLEパケットを受信し、自宅WiFi経由でGoogle Driveにデータを保存するゲートウェイデバイス</p></li>
+<li><p><strong>アプリ:</strong> スマートフォン上で動作し、BLEでセンサーのデータを受信・表示・クラウド連携するアプリケーション</p></li>
+</ul>
+<p><strong>動作モード:</strong></p>
+<ul class="simple">
+<li><p><strong>Parking Mode (駐車中):</strong> 車両が駐車中。センサーは低頻度・長距離通信（BLE Coded PHY）で送信し、中継器経由でGoogle Driveへ保存する。長期傾向データの収集に対応。</p></li>
+<li><p><strong>Active Mode (走行中):</strong> 車両が走行中。センサーは高頻度・短距離通信（BLE 1M/2M PHY）で送信し、アプリで受信・Google Driveへ保存する。短期高頻度データの収集に対応。</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-906149f8">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_CALIB">
+</section>
+<section id="id2">
+<h1>センサー要件<a class="headerlink" href="#id2" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-b43f5492">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_MEASURE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電流キャリブレーション</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_CALIB" title="DEV_CALIB">DEV_CALIB</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">計測パラメータ</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SEN_MEASURE" title="SEN_MEASURE">SEN_MEASURE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span><span class="needs_spacer">, </span><span class="needs_data">calibration</span></span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Must</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_MCU" title="SEN_MEASURE">DES_MCU</a>, <a class="reference internal" href="design.html#DES_VOLT_SENSE" title="SEN_MEASURE">DES_VOLT_SENSE</a>, <a class="reference internal" href="design.html#DES_CURRENT_SENSE" title="SEN_MEASURE">DES_CURRENT_SENSE</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>アプリからの指示を受け、現在の電流計測値を「0A（ゼロ点）」として補正し、オフセット値を不揮発性メモリに保存・適用する機能を実装する。</p></td>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>センサーは以下の項目を計測しなければならない。</p>
+<ul class="simple">
+<li><p>車両バッテリー電圧</p></li>
+<li><p>車両バッテリー電流（充放電方向の識別必須）</p></li>
+<li><p>デバイス内蔵バッテリー電圧</p></li>
+</ul>
+<p>なお、センサーはRTCなどにより内部時刻を保持する必要はなく、受信側（中継器またはアプリ）で受信時刻をタイムスタンプとして使用する。</p>
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-6afbdf69">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_POWER">
+<div class="need_container docutils container" id="SNCB-c94ffe78">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_POWER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電源管理とスマート充電</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_POWER" title="DEV_POWER">DEV_POWER</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電源管理</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SEN_POWER" title="SEN_POWER">SEN_POWER</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">power</span></span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">power</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Should</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_POWER" title="SEN_POWER">DES_POWER</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
 <tr class="need content row-odd"><td class="need content" colspan="1"><ul class="simple">
-<li><p>電源は乾電池または充電池（選択式）とする。</p></li>
-<li><p>充電池モード時は、車両が発電中（オルタネーター稼働中）の場合のみ充電を行う。</p></li>
+<li><p>電源は乾電池または充電池を設計に基づいて選択する。</p></li>
+<li><p>充電池を使用する場合は、車両が発電中（オルタネーター稼働中）の場合のみ充電を行う。</p></li>
 <li><p>車両停止時は暗電流を極小化する。</p></li>
 </ul>
 </td>
@@ -186,190 +203,163 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-10cad2c8">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_BLE_MODE">
+<div class="need_container docutils container" id="SNCB-0042c09a">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_BLE_ACTIVE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">BLE通信モード制御</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_BLE_MODE" title="DEV_BLE_MODE">DEV_BLE_MODE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">BLE送信 (Active Mode)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SEN_BLE_ACTIVE" title="SEN_BLE_ACTIVE">SEN_BLE_ACTIVE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">communication</span><span class="needs_spacer">, </span><span class="needs_data">ble</span></span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">communication</span><span class="needs_spacer">, </span><span class="needs_data">ble</span><span class="needs_spacer">, </span><span class="needs_data">active-mode</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Should</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_MODE_SWITCH" title="SEN_BLE_ACTIVE">DES_MODE_SWITCH</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>車両の状態に応じて通信モードを切り替える。</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Active Mode時、センサーはBLE 1M/2M PHYを使用し、リアルタイム計測値を高頻度で送信する。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-e6b1ad5d">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_BLE_PARKING">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">BLE送信 (Parking Mode)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SEN_BLE_PARKING" title="SEN_BLE_PARKING">SEN_BLE_PARKING</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">communication</span><span class="needs_spacer">, </span><span class="needs_data">ble</span><span class="needs_spacer">, </span><span class="needs_data">parking-mode</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Must</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_MCU" title="SEN_BLE_PARKING">DES_MCU</a>, <a class="reference internal" href="design.html#DES_MODE_SWITCH" title="SEN_BLE_PARKING">DES_MODE_SWITCH</a>, <a class="reference internal" href="design.html#DES_BLE_PACKET" title="SEN_BLE_PARKING">DES_BLE_PACKET</a>, <a class="reference internal" href="design.html#DES_COMM_SELECTION" title="SEN_BLE_PARKING">DES_COMM_SELECTION</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Parking Mode時、センサーはBLE Coded PHY (Long Range)を使用し、低頻度（例：12分毎）で送信する。
+送信パケットには「現在値」に加え「過去N回分のログ」を含め、
+通信パケット欠落時のデータ補完を可能にする。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-4346f963">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="SEN_STORAGE">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">内部データ保持</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#SEN_STORAGE" title="SEN_STORAGE">SEN_STORAGE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">sensor</span><span class="needs_spacer">, </span><span class="needs_data">storage</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Must</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_BLE_PACKET" title="SEN_STORAGE">DES_BLE_PACKET</a>, <a class="reference internal" href="design.html#DES_RTC_MEMORY" title="SEN_STORAGE">DES_RTC_MEMORY</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>計測データは内部メモリのリングバッファに保持し、未送信時のデータを保全する。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id3">
+<h1>中継器要件<a class="headerlink" href="#id3" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-3ed60f4a">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="RPT_CLOUD_SYNC">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">BLE受信とクラウド保存 (Parking Mode)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#RPT_CLOUD_SYNC" title="RPT_CLOUD_SYNC">RPT_CLOUD_SYNC</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">repeater</span><span class="needs_spacer">, </span><span class="needs_data">cloud</span><span class="needs_spacer">, </span><span class="needs_data">parking-mode</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Must</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_REPEATER" title="RPT_CLOUD_SYNC">DES_REPEATER</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>中継器はセンサーからのBLE Coded PHYパケットを常時受信し、自宅WiFi経由でGoogle Driveへデータを保存する。</p>
 <ul class="simple">
-<li><p><strong>Active Mode (走行中):</strong> BLE 1M/2M PHYを使用し、リアルタイム値を高頻度送信する。</p></li>
-<li><p><strong>Parking Mode (駐車中):</strong> BLE Coded PHY (Long Range)を使用し、低頻度（例：10分毎）で送信する。</p></li>
+<li><p>受信時刻をタイムスタンプとして付与する。過去ログのタイムスタンプは測定間隔から推定する。</p></li>
+<li><p>共通のGoogleアカウントまたは共有フォルダを使用する。</p></li>
+<li><p>受信した全データ（測定値）をDrive上のCSVファイルへ追記する。</p></li>
+<li><p>受信できなかったパケットはエラーとせず、次回受信時のパケット内過去ログで補完する。</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-80893085">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_BLE_REDUNDANCY">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">冗長データ送信</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_BLE_REDUNDANCY" title="DEV_BLE_REDUNDANCY">DEV_BLE_REDUNDANCY</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">communication</span></span></span></div>
-</span></span></div>
-<div class="line"><span></span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>Parking Mode時の送信パケットには、「現在値」に加え「過去N回分のログ」を含め、通信パケット欠落時のデータ補完を可能にする。</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-9c7c08ac">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_SECURITY">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">セキュリティ（ペアリング）</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_SECURITY" title="DEV_SECURITY">DEV_SECURITY</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">security</span></span></span></div>
-</span></span></div>
-<div class="line"><span></span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>BLE Bonding（ペアリング）機能を実装し、認証されたスマートフォン以外からの接続・操作を拒否する。</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-2bafbe04">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="DEV_STORAGE">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">内部データ保持</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#DEV_STORAGE" title="DEV_STORAGE">DEV_STORAGE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">device</span><span class="needs_spacer">, </span><span class="needs_data">storage</span></span></span></div>
-</span></span></div>
-<div class="line"><span></span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>計測データは内部メモリのリングバッファに保持し、未接続時のデータを保全する。</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr class="docutils" />
-<div class="need_container docutils container" id="SNCB-34793308">
+</section>
+<section id="id4">
+<h1>アプリ要件<a class="headerlink" href="#id4" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-2fca7e1e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="APP_DATA_SYNC">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">データ受信と結合処理</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#APP_DATA_SYNC" title="APP_DATA_SYNC">APP_DATA_SYNC</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">データ受信とクラウド保存 (Active Mode)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#APP_DATA_SYNC" title="APP_DATA_SYNC">APP_DATA_SYNC</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">app</span><span class="needs_spacer">, </span><span class="needs_data">logic</span></span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">app</span><span class="needs_spacer">, </span><span class="needs_data">logic</span><span class="needs_spacer">, </span><span class="needs_data">active-mode</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Should</span></span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><ul class="simple">
-<li><p>受信パケットに含まれる過去ログ（冗長分）を活用し、欠落データを補完する。</p></li>
-<li><p>定期送信を受信できなかった場合はエラーとせず無視し、次回受信時の補完で対応する。</p></li>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Active Mode時、アプリはセンサーからのBLEパケットを受信し、Google Driveへデータを保存する。</p>
+<ul class="simple">
+<li><p>受信時刻をタイムスタンプとして付与する。</p></li>
+<li><p>中継器と同一のGoogle Drive・CSVフォーマットを使用し、データを統合可能にする。</p></li>
+<li><p>受信できなかったパケットはエラーとせず無視する。</p></li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-be97f8a9">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="APP_TIME_SYNC">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">時刻同期</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#APP_TIME_SYNC" title="APP_TIME_SYNC">APP_TIME_SYNC</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">app</span><span class="needs_spacer">, </span><span class="needs_data">logic</span></span></span></div>
-</span></span></div>
-<div class="line"><span></span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>BLE接続確立時にスマートフォンの時刻をデバイスへ送信し、RTCを補正する。</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-ffb234e9">
-<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="APP_CLOUD_SYNC">
-<tbody>
-<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Google Drive連携</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#APP_CLOUD_SYNC" title="APP_CLOUD_SYNC">APP_CLOUD_SYNC</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
-</div>
-</td>
-</tr>
-<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
-<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
-<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">app</span><span class="needs_spacer">, </span><span class="needs_data">cloud</span></span></span></div>
-</span></span></div>
-<div class="line"><span></span></div>
-</div>
-</td>
-</tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><ul class="simple">
-<li><p>共通のGoogleアカウントまたは共有フォルダを使用する。</p></li>
-<li><p>アプリ内の未送信データをDrive上のCSVファイルへ追記（アップロード）する。</p></li>
-<li><p>アプリ起動時にDrive上のCSVファイルを読み込み（ダウンロード）、グラフを表示する。</p></li>
-<li><p>ログファイルは月次分割せず、単一またはシンプルな構成とする。</p></li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="need_container docutils container" id="SNCB-0cffaead">
+<div class="need_container docutils container" id="SNCB-0d3af0b5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="APP_UI">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
-<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">ユーザーインターフェース</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#APP_UI" title="APP_UI">APP_UI</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">ユーザーインターフェース (Active Mode)</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#APP_UI" title="APP_UI">APP_UI</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
 </div>
 </td>
 </tr>
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">app</span><span class="needs_spacer">, </span><span class="needs_data">ui</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Should</span></span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>
 </td>
 </tr>
-<tr class="need content row-odd"><td class="need content" colspan="1"><p>以下の画面・機能を提供する。</p>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Active Mode時には以下の画面・機能を提供する。</p>
 <ul class="simple">
 <li><p>ダッシュボード（リアルタイム表示）</p></li>
 <li><p>履歴グラフ表示</p></li>
-<li><p>デバイス設定（ペアリング、電流0点補正）</p></li>
+<li><p>デバイス設定（電流0点補正）</p></li>
 <li><p>通知（異常値検知時のみ）</p></li>
 </ul>
 </td>
@@ -377,8 +367,10 @@
 </tbody>
 </table>
 </div>
-<hr class="docutils" />
-<div class="need_container docutils container" id="SNCB-a23de0cf">
+</section>
+<section id="id5">
+<h1>非機能要件<a class="headerlink" href="#id5" title="Link to this heading"></a></h1>
+<div class="need_container docutils container" id="SNCB-289072c1">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_SAFETY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -389,8 +381,10 @@
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">non-functional</span><span class="needs_spacer">, </span><span class="needs_data">safety</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Must</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_POWER" title="NFR_SAFETY">DES_POWER</a>, <a class="reference internal" href="design.html#DES_VOLT_SENSE" title="NFR_SAFETY">DES_VOLT_SENSE</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
@@ -399,7 +393,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-1b5a4f20">
+<div class="need_container docutils container" id="SNCB-473b94c5">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_ENV">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -410,8 +404,10 @@
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">non-functional</span><span class="needs_spacer">, </span><span class="needs_data">hardware</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Should</span></span></div>
 </span></span></div>
-<div class="line"><span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_POWER" title="NFR_ENV">DES_POWER</a></span></span></div>
+</span></div>
 </div>
 </td>
 </tr>
@@ -420,7 +416,7 @@
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-b6fd0863">
+<div class="need_container docutils container" id="SNCB-5e8d28c3">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_MAINTENANCE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -431,12 +427,88 @@
 <tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
 <div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
 <div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">non-functional</span><span class="needs_spacer">, </span><span class="needs_data">maintenance</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Could</span></span></div>
 </span></span></div>
 <div class="line"><span></span></div>
 </div>
 </td>
 </tr>
 <tr class="need content row-odd"><td class="need content" colspan="1"><p>ファームウェア更新は物理接続（SWD/USB等）にて行い、OTA機能は実装しない。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-664f6638">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_ADC_ACCURACY">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">ADC精度とデバイス電源電圧変動</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#NFR_ADC_ACCURACY" title="NFR_ADC_ACCURACY">NFR_ADC_ACCURACY</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">non-functional</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span><span class="needs_spacer">, </span><span class="needs_data">accuracy</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Could</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_VOLT_SENSE" title="NFR_ADC_ACCURACY">DES_VOLT_SENSE</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>デバイスが電池駆動の場合、電池電圧の低下に伴いVDDが変動し、ADC計測値に影響を及ぼす可能性がある。必要に応じて以下の対策を検討すること。</p>
+<ul class="simple">
+<li><p>デバイス内蔵バッテリー電圧を同時に計測し、送信データに含める（SEN_MEASUREの「デバイス内蔵バッテリー電圧」に該当）</p></li>
+<li><p>既知の電圧源を用いたキャリブレーション機能の実装</p></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-febb79aa">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_BLE_RANGE">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">Parking Mode到達距離</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#NFR_BLE_RANGE" title="NFR_BLE_RANGE">NFR_BLE_RANGE</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">non-functional</span><span class="needs_spacer">, </span><span class="needs_data">communication</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Should</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_REPEATER" title="NFR_BLE_RANGE">DES_REPEATER</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>Parking Mode時、駐車場から中継器設置場所（例：自宅窓の外）まで十分な通信距離を確保すること。</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="need_container docutils container" id="SNCB-7157fdea">
+<table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_req docutils align-default" id="NFR_CURRENT_CALIB">
+<tbody>
+<tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
+<div class="line"><span><span class="needs_type_name"><span class="needs_data">Requirement</span></span>: </span><strong><span><span class="needs_title"><span class="needs_data">電流キャリブレーション</span></span></span></strong><span> <span class="needs-id"><a class="reference internal" href="#NFR_CURRENT_CALIB" title="NFR_CURRENT_CALIB">NFR_CURRENT_CALIB</a></span>  <span class="needs needs_collapse" id="target__show__meta"><span class="needs collapsed"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-down-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="8 12 12 16 16 12"></polyline><line x1="12" y1="8" x2="12" y2="16"></line></svg></span><span class="needs visible collapse_is_hidden"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg></span></span> </span></div>
+</div>
+</td>
+</tr>
+<tr class="need meta row-even"><td class="need meta"><div class="needs_meta line-block">
+<div class="line"><span><span><div class="line"><span class="needs_status"><span class="needs_label">status: </span><span class="needs_data">open</span></span></div>
+<div class="line"><span class="needs_tags"><span class="needs_label">tags: </span><span class="needs_data_container"><span class="needs_data">non-functional</span><span class="needs_spacer">, </span><span class="needs_data">measurement</span><span class="needs_spacer">, </span><span class="needs_data">calibration</span></span></span></div>
+<div class="line"><span class="needs_priority"><span class="needs_label">priority: </span><span class="needs_data">Could</span></span></div>
+</span></span></div>
+<div class="line"><span><div class="line">links incoming: <span class="links"><span><a class="reference internal" href="design.html#DES_CURRENT_SENSE" title="NFR_CURRENT_CALIB">DES_CURRENT_SENSE</a></span></span></div>
+</span></div>
+</div>
+</td>
+</tr>
+<tr class="need content row-odd"><td class="need content" colspan="1"><p>電流計測値の精度を確保するため、現在の電流値を「0A（ゼロ点）」として補正し、オフセット値を不揮発性メモリに保存・適用する機能を実装する。
+直接到達が困難な場合は、中継器等のアーキテクチャ上の対策を設計段階で検討する。</p></td>
 </tr>
 </tbody>
 </table>
@@ -448,7 +520,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="bamoni documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="design.html" class="btn btn-neutral float-right" title="仕様検討メモ" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="design.html" class="btn btn-neutral float-right" title="設計ドキュメント" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
