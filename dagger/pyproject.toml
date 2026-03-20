@@ -3,6 +3,4 @@ name = "bamoni"
 version = "0.0.0"
 description = "CI pipeline for bamoni"
 requires-python = ">=3.10"
-dependencies = [
-    "dagger-io>=0.15.0",
-]
+dependencies = []

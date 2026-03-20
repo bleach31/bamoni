@@ -1,5 +1,6 @@
 {
   "name": "bamoni",
   "sdk": "python",
-  "source": "dagger"
+  "source": "dagger",
+  "engineVersion": "v0.20.3"
 }
