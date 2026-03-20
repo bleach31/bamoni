@@ -2,7 +2,7 @@
 #include <stdint.h>
 
 // --- デバイス識別 ---
-#define BAMONI_DEVICE_NAME   "bamoni-P"
+#define BAMONI_DEVICE_NAME   "bamoni"
 #define BAMONI_COMPANY_ID    0xFFFF
 
 // --- タイミング ---

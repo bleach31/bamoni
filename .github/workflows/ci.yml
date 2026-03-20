@@ -24,12 +24,8 @@ jobs:
         include:
           - project: firmware_sensor
             environment: seeed_xiao_esp32c3_main
-          - project: firmware_sensor
-            environment: c3_sender_test
-          - project: firmware_sensor
-            environment: 8266_receiver_test
           - project: firmware_repeater
-            environment: seeed_xiao_esp32c3
+            environment: seeed_xiao_esp32c3_main
     steps:
       - uses: actions/checkout@v4
       - name: Build ${{ matrix.project }} (${{ matrix.environment }})
