@@ -35,6 +35,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="索引" href="genindex.html" />
     <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="セットアップガイド" href="setup.html" />
     <link rel="prev" title="要件定義" href="requirements.html" /> 
 </head>
 
@@ -73,6 +74,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#id9">通信方式の選定経緯</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">セットアップガイド</a></li>
 </ul>
 
         </div>
@@ -111,7 +113,7 @@
 </dl>
 <section id="mcu">
 <h2>MCU選定<a class="headerlink" href="#mcu" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-2e8cd7d0">
+<div class="need_container docutils container" id="SNCB-7afa8d28">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_MCU">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -152,7 +154,7 @@
 </section>
 <section id="id2">
 <h2>電源回路<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-4140c676">
+<div class="need_container docutils container" id="SNCB-236eae36">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_POWER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -212,7 +214,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id3">
 <h2>電圧測定回路<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-cb664d0f">
+<div class="need_container docutils container" id="SNCB-8cad80fc">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_VOLT_SENSE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -276,7 +278,7 @@ NiMH x 4 (Series)
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-5db3e696">
+<div class="need_container docutils container" id="SNCB-2a990ab6">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_GND">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -305,7 +307,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id4">
 <h2>電流測定回路<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-450a0c7b">
+<div class="need_container docutils container" id="SNCB-ff102129">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_CURRENT_SENSE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -332,7 +334,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id5">
 <h2>動作モード切替<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-57179921">
+<div class="need_container docutils container" id="SNCB-c0dfb1e8">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_MODE_SWITCH">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -364,7 +366,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id6">
 <h2>中継器設計<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-95e4ba37">
+<div class="need_container docutils container" id="SNCB-d472af69">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_REPEATER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -386,17 +388,35 @@ NiMH x 4 (Series)
 <p><strong>設置場所:</strong> 自宅の窓の外側。エアコンの壁穴を通してUSB給電する。</p>
 <p><strong>処理フロー:</strong></p>
 <ol class="arabic simple">
+<li><p>起動時にWiFiに接続し、NTP（ntp.nict.jp）で時刻同期する</p></li>
 <li><p>BLE Coded PHYでセンサーのアドバタイズパケットを常時スキャン</p></li>
-<li><p>パケット受信時、受信時刻をタイムスタンプとして付与</p></li>
+<li><p>パケット受信時、NTP時刻を基準にタイムスタンプを付与</p></li>
 <li><p>パケット内の過去ログを展開し、測定間隔から各ログのタイムスタンプを推定</p></li>
-<li><p>自宅WiFiに接続し、Google Drive上のCSVファイルへ追記</p></li>
+<li><p>Google Apps Script (GAS) WebhookへHTTP POSTし、スプレッドシート/CSVに追記</p></li>
 </ol>
-<p><strong>未決定事項:</strong></p>
+<p><strong>クラウド連携方式: GAS Webhook</strong></p>
 <ul class="simple">
-<li><p>Google Drive APIへのアクセス方法（サービスアカウント？OAuth？Google Apps Script Webhook？）</p></li>
-<li><p>WiFi接続が切れた場合のローカルバッファリング</p></li>
-<li><p>CSVフォーマットの仕様</p></li>
+<li><p>ESP32からGASのWebアプリURLへHTTP POSTするだけで、認証処理が不要（URLが秘密鍵代わり）。</p></li>
+<li><p>サービスアカウントやOAuthはESP32のメモリ・実装コストが大きいため不採用。</p></li>
+<li><p>WiFi SSID/パスワードおよびGAS URLは <code class="docutils literal notranslate"><span class="pre">secrets.h</span></code> に定義し、Git管理外とする。</p></li>
 </ul>
+<p><strong>タイムスタンプ重複排除:</strong></p>
+<ul class="simple">
+<li><p>センサーは毎回パケットに過去ログを含むため、同じ測定データが複数回受信される。</p></li>
+<li><p>リピーターは <code class="docutils literal notranslate"><span class="pre">lastUploadedTimestamp</span></code> を保持し、それより新しい推定時刻のエントリのみアップロードする。</p></li>
+<li><p>これにより、BLEパケット欠落時の過去ログ補完と、重複登録の防止を両立する。</p></li>
+</ul>
+<p><strong>WiFi切断時の挙動:</strong></p>
+<ul class="simple">
+<li><p>WiFi切断中はGASへの送信をスキップする。ローカルバッファリングは行わない。</p></li>
+<li><p>WiFi復帰後、次のBLEパケット受信時に過去ログが含まれるため、データは自動的に補完される。</p></li>
+</ul>
+<p><strong>CSVフォーマット:</strong></p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>timestamp,voltage_mv
+2026-03-20T15:30:00,12680
+2026-03-20T15:18:00,12700
+</pre></div>
+</div>
 </td>
 </tr>
 </tbody>
@@ -405,7 +425,7 @@ NiMH x 4 (Series)
 </section>
 <section id="ble">
 <h2>BLEパケット仕様<a class="headerlink" href="#ble" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-0f592246">
+<div class="need_container docutils container" id="SNCB-af7e6e9a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_BLE_PACKET">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -465,7 +485,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id7">
 <h2>センサー設置設計<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-1ce46c8e">
+<div class="need_container docutils container" id="SNCB-54c75e8b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_SENSOR_PLACEMENT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -504,7 +524,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id8">
 <h2>データ保存方式<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-0a2c987d">
+<div class="need_container docutils container" id="SNCB-2200388a">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_RTC_MEMORY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -540,7 +560,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id9">
 <h2>通信方式の選定経緯<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-1c772dea">
+<div class="need_container docutils container" id="SNCB-11973391">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_COMM_SELECTION">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -583,6 +603,7 @@ ESP-NOW は不採用。test_esp-now/ 以下のコードは実験用として残�
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="requirements.html" class="btn btn-neutral float-left" title="要件定義" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="setup.html" class="btn btn-neutral float-right" title="セットアップガイド" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

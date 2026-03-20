@@ -20,4 +20,5 @@ bamoni documentation
 
    requirements
    design
+   setup
 
