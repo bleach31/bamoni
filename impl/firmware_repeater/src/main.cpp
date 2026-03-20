@@ -1,66 +1,102 @@
 #include <Arduino.h>
-#include <WiFi.h>
+#include <NimBLEDevice.h>
+#include <bamoni_protocol.h>
 
-// WiFiの設定
-const char* ssid = "XIAO-MaxPower-Test";
-const char* password = "password123";
+// BLEスキャン設定
+#define SCAN_DURATION_SEC  0  // 0 = 永続スキャン
 
-WiFiServer server(80);
+static NimBLEScan* pScan = nullptr;
+
+// パケットをパースしてシリアル出力
+void handlePacket(const uint8_t* data, size_t len, int rssi) {
+  if (len < BAMONI_PACKET_HEADER_SIZE) {
+    Serial.printf("[WARN] Packet too short: %d bytes\n", len);
+    return;
+  }
+
+  const BamoniPacket* pkt = reinterpret_cast<const BamoniPacket*>(data);
+
+  if (pkt->companyId != BAMONI_COMPANY_ID) {
+    return;
+  }
+
+  uint8_t count = pkt->historyCount;
+  if (count > BAMONI_MAX_HISTORY_LEN) {
+    count = BAMONI_MAX_HISTORY_LEN;
+  }
+
+  // 受信データ内に履歴が収まっているか確認
+  size_t expectedLen = BAMONI_PACKET_HEADER_SIZE + count * sizeof(uint16_t);
+  if (len < expectedLen) {
+    Serial.printf("[WARN] Packet truncated: %d < %d\n", len, expectedLen);
+    return;
+  }
+
+  // 現在時刻を取得（タイムスタンプ用）
+  unsigned long now = millis() / 1000;
+
+  Serial.println("========================================");
+  Serial.printf("[RX] RSSI: %d dBm | Time: %lus\n", rssi, now);
+  Serial.printf("  Current Voltage: %u mV\n", pkt->currentVoltage);
+  Serial.printf("  History Count:   %u\n", count);
+
+  for (int i = 0; i < count; i++) {
+    // 履歴は最新→過去順。各エントリは BAMONI_MEASURE_INTERVAL_SEC 間隔
+    int agoSec = (i + 1) * BAMONI_MEASURE_INTERVAL_SEC;
+    if (agoSec >= 120) {
+      Serial.printf("  [-%3d min] %u mV\n", agoSec / 60, pkt->history[i]);
+    } else {
+      Serial.printf("  [-%3d sec] %u mV\n", agoSec, pkt->history[i]);
+    }
+  Serial.println("========================================");
+}
+
+// スキャンコールバック
+class ScanCallbacks : public NimBLEScanCallbacks {
+  void onResult(const NimBLEAdvertisedDevice* device) override {
+    // デバイス名でフィルタ
+    if (!device->haveName() || device->getName() != BAMONI_DEVICE_NAME) {
+      return;
+    }
+
+    // Manufacturer Dataを取得
+    if (!device->haveManufacturerData()) {
+      return;
+    }
+
+    std::string mfgData = device->getManufacturerData();
+    handlePacket(
+      reinterpret_cast<const uint8_t*>(mfgData.data()),
+      mfgData.size(),
+      device->getRSSI()
+    );
+  }
+};
 
 void setup() {
   delay(2000);
   Serial.begin(115200);
-  delay(2000);
+  delay(1000);
 
-  Serial.println("WiFi Max Power Test Start...");
+  Serial.println("=== Bamoni Repeater Starting ===");
 
-  // WiFiモードの設定
-  WiFi.mode(WIFI_AP);
+  // BLE初期化（Coded PHY受信）
+  NimBLEDevice::init("bamoni-R");
+  NimBLEDevice::setDefaultPhy(BLE_GAP_LE_PHY_CODED_MASK, BLE_GAP_LE_PHY_CODED_MASK);
 
-  // アクセスポイントの開始
-  WiFi.softAP(ssid, password);
+  pScan = NimBLEDevice::getScan();
+  pScan->setScanCallbacks(new ScanCallbacks(), true);  // true = 重複パケットも通知
+  pScan->setActiveScan(false);  // パッシブスキャン（アドバタイズのみ受信）
 
-  // ★WiFiの送信出力を最大(19.5dBm)に設定
-  // これにより、電波をできるだけ遠くまで飛ばす設定になります
-  WiFi.setTxPower(WIFI_POWER_19_5dBm);
-
-  IPAddress myIP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(myIP);
-
-  server.begin();
-  Serial.println("Server is ready!");
+  Serial.printf("Scanning for '%s' on Coded PHY...\n", BAMONI_DEVICE_NAME);
+  pScan->start(SCAN_DURATION_SEC);
 }
 
 void loop() {
-  WiFiClient client = server.available();
-
-  if (client) {
-    String currentLine = "";
-    while (client.connected()) {
-      if (client.available()) {
-        char c = client.read();
-        if (c == '\n') {
-          if (currentLine.length() == 0) {
-            client.println("HTTP/1.1 200 OK");
-            client.println("Content-type:text/html");
-            client.println();
-
-            // シンプルな英語メッセージ
-            client.print("<h1>WiFi Max Power Test</h1>");
-            client.print("<p>Status: OK!</p>");
-            client.print("<p>The power is now MAX (19.5dBm).</p>");
-            client.print("<p>Please check the distance.</p>");
-            client.println();
-            break;
-          } else {
-            currentLine = "";
-          }
-        } else if (c != '\r') {
-          currentLine += c;
-        }
-      }
-    }
-    client.stop();
+  // スキャンが停止した場合は再開
+  if (!pScan->isScanning()) {
+    Serial.println("[INFO] Scan stopped, restarting...");
+    pScan->start(SCAN_DURATION_SEC);
   }
+  delay(1000);
 }
