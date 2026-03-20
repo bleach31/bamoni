@@ -111,7 +111,7 @@
 </dl>
 <section id="mcu">
 <h2>MCU選定<a class="headerlink" href="#mcu" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-acf5be7c">
+<div class="need_container docutils container" id="SNCB-2e8cd7d0">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_MCU">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -152,7 +152,7 @@
 </section>
 <section id="id2">
 <h2>電源回路<a class="headerlink" href="#id2" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-ce574b48">
+<div class="need_container docutils container" id="SNCB-4140c676">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_POWER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -212,7 +212,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id3">
 <h2>電圧測定回路<a class="headerlink" href="#id3" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-bc333eed">
+<div class="need_container docutils container" id="SNCB-cb664d0f">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_VOLT_SENSE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -276,7 +276,7 @@ NiMH x 4 (Series)
 </tbody>
 </table>
 </div>
-<div class="need_container docutils container" id="SNCB-eb164f84">
+<div class="need_container docutils container" id="SNCB-5db3e696">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_GND">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -305,7 +305,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id4">
 <h2>電流測定回路<a class="headerlink" href="#id4" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-273a48c6">
+<div class="need_container docutils container" id="SNCB-450a0c7b">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_CURRENT_SENSE">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -332,7 +332,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id5">
 <h2>動作モード切替<a class="headerlink" href="#id5" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-0f304796">
+<div class="need_container docutils container" id="SNCB-57179921">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_MODE_SWITCH">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -364,7 +364,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id6">
 <h2>中継器設計<a class="headerlink" href="#id6" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-e481e4b0">
+<div class="need_container docutils container" id="SNCB-95e4ba37">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_REPEATER">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -405,7 +405,7 @@ NiMH x 4 (Series)
 </section>
 <section id="ble">
 <h2>BLEパケット仕様<a class="headerlink" href="#ble" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-cf103b15">
+<div class="need_container docutils container" id="SNCB-0f592246">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_BLE_PACKET">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -423,6 +423,11 @@ NiMH x 4 (Series)
 </td>
 </tr>
 <tr class="need content row-odd"><td class="need content" colspan="1"><p>Parking Mode時のBLEアドバタイズパケット仕様。Extended Advertising (BLE 5.x) を使用する。</p>
+<p><strong>Extended Advertisingを採用する理由:</strong></p>
+<ul class="simple">
+<li><p><strong>Coded PHYの必須条件:</strong> BLE Long Range（Coded PHY）はExtended Advertisingでのみ使用可能。レガシーアドバタイズは1M PHY固定であり、Coded PHYを指定しても実際には1M PHYで送信される。</p></li>
+<li><p><strong>ペイロード容量:</strong> レガシーアドバタイズは31バイトが上限だが、本システムのパケットは101バイト必要。Extended Advertisingは254バイトまで対応。</p></li>
+</ul>
 <p><strong>容量制約:</strong></p>
 <ul class="simple">
 <li><p>Extended Advertising の1パケット上限は <strong>254バイト</strong> 。これを超えるとChaining（分割送信）が発生し、電池消費が増えるため、254バイト以内に収める。</p></li>
@@ -460,7 +465,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id7">
 <h2>センサー設置設計<a class="headerlink" href="#id7" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-8ad108fe">
+<div class="need_container docutils container" id="SNCB-1ce46c8e">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_SENSOR_PLACEMENT">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -499,7 +504,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id8">
 <h2>データ保存方式<a class="headerlink" href="#id8" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-30b6986c">
+<div class="need_container docutils container" id="SNCB-0a2c987d">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_RTC_MEMORY">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">
@@ -535,7 +540,7 @@ NiMH x 4 (Series)
 </section>
 <section id="id9">
 <h2>通信方式の選定経緯<a class="headerlink" href="#id9" title="Link to this heading"></a></h2>
-<div class="need_container docutils container" id="SNCB-73ed7cab">
+<div class="need_container docutils container" id="SNCB-1c772dea">
 <table class="need needs_grid_simple needs_layout_clean needs_style_none needs_type_spec docutils align-default" id="DES_COMM_SELECTION">
 <tbody>
 <tr class="need head row-odd"><td class="need head"><div class="needs_head line-block">

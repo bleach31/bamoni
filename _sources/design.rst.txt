@@ -209,6 +209,11 @@ BLEパケット仕様
 
    Parking Mode時のBLEアドバタイズパケット仕様。Extended Advertising (BLE 5.x) を使用する。
 
+   **Extended Advertisingを採用する理由:**
+
+   * **Coded PHYの必須条件:** BLE Long Range（Coded PHY）はExtended Advertisingでのみ使用可能。レガシーアドバタイズは1M PHY固定であり、Coded PHYを指定しても実際には1M PHYで送信される。
+   * **ペイロード容量:** レガシーアドバタイズは31バイトが上限だが、本システムのパケットは101バイト必要。Extended Advertisingは254バイトまで対応。
+
    **容量制約:**
 
    * Extended Advertising の1パケット上限は **254バイト** 。これを超えるとChaining（分割送信）が発生し、電池消費が増えるため、254バイト以内に収める。
